@@ -33,7 +33,7 @@ export const projects = [
   },
   {
     id: 'numer9',
-    titleEn: 'Numer9',
+    titleEn: 'N9',
     label: 'AI Service Design',
     titleKo: 'AI 활용 무간섭 시니어 디자인',
     title: 'Numer9 (N9)',
