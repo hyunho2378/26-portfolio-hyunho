@@ -52,7 +52,6 @@ export default function CarouselTabs({ activeTab, onChange }) {
             style={{
               background: 'none',
               border: 'none',
-              borderBottom: isActive ? `2px solid ${color.accent}` : '2px solid transparent',
               cursor: 'pointer',
               padding: `${space[2]} ${space[3]}`,
               fontSize: typeToken.label.size,
@@ -60,7 +59,7 @@ export default function CarouselTabs({ activeTab, onChange }) {
               fontFamily: 'Pretendard, sans-serif',
               letterSpacing: typeToken.label.ls,
               color: isActive ? color.accent : color.muted,
-              transition: 'color 150ms ease, border-color 150ms ease',
+              transition: 'color 200ms ease',
               outline: 'none',
               whiteSpace: 'nowrap',
               lineHeight: 1.4,

@@ -206,7 +206,13 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   // 좌측 미디어: dev/ux=썸네일 / visual=갤러리. 없으면 포스터 유지.
   const galleryImgs = project.type === 'visual' ? (project.gallery || []) : []
   const hasGallery = galleryImgs.length > 0
-  const hasThumb = project.type !== 'visual' && !!project.thumbnail
+  const hasThumb = project.type !== 'visual' && !project.flipImageMode && !project.flipInfoMode && !!project.thumbnail
+
+  // ── flip 판정 (geometry보다 먼저: dockedCx 계산에 flipWide 필요) ──
+  const flipImage = project.thumbnail || (project.gallery && project.gallery[0]?.src) || null
+  const canFlip = (project.type === 'visual' || project.flipImageMode || project.flipInfoMode) && !!flipImage
+  const flipWide = !!(project.flipInfoMode || project.flipLandscape) // 가로 웹 캡처 펼침
+  const anyFlip = canFlip
 
   // ── geometry ──
   const vw = window.innerWidth
@@ -226,11 +232,16 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
     dockedCy = vh * 0.26
   } else {
     dockedScale = Math.min((vw * 0.34) / rect.width, (vh * 0.8) / rect.height)
-    dockedCx = vw * 0.22
+    // 가로 펼침은 좌측 이미지 영역(좌패딩 4% ~ 47%) 중앙(≈vw*0.255)에 맞춰 카드를 약간 오른쪽으로
+    dockedCx = flipWide ? vw * 0.255 : vw * 0.22
     dockedCy = vh * 0.5
   }
   const dockedTx = dockedCx - srcCx
   const dockedTy = dockedCy - srcCy
+
+  // 가로 펼침 박스 — 폭 vw*0.43(우측 끝 47% < 정보 50%), 높이 vh*0.72. contain이라 어떤 비율도
+  // 박스 안에서 자동 맞춤(잘림·박스 없음). 컨테이너가 dockedScale로 확대되므로 /dockedScale로 상쇄.
+  const wideBox = { width: `${(vw * 0.43) / dockedScale}px`, height: `${(vh * 0.72) / dockedScale}px` }
 
   const transforms = {
     from: 'translate(0px, 0px) scale(1)',
@@ -249,22 +260,18 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   const [closing, setClosing] = useState(false)
   const [flipped, setFlipped] = useState(false)
 
-  // visual 타입 + 이미지(썸네일 또는 갤러리 첫 장) 있으면 카드를 뒤집어 작품 이미지로 전환
-  const flipImage = project.thumbnail || (project.gallery && project.gallery[0]?.src) || null
-  const canFlip = project.type === 'visual' && !!flipImage
-
   // phase machine — center에서 잠깐 머문 뒤 docked로 (전체 약 0.5s 단축)
   useEffect(() => {
-    if (reduced) { if (canFlip) setFlipped(true); return }
+    if (reduced) { if (anyFlip) setFlipped(true); return }
     const raf = requestAnimationFrame(() => { setPhase('center'); setDimIn(true) })
     // center 등장(520ms) + 짧은 텀(120ms) 후 docked로
     const tDock = setTimeout(() => { setPhase('docked') }, 520 + 120)
     // docked 이동이 거의 끝날 때 우측 정보 등장
     const tInfo = setTimeout(() => { setInfoVisible(true) }, 520 + 120 + 320)
-    // visual: docked 정착 후 카드 플립
-    const tFlip = canFlip ? setTimeout(() => setFlipped(true), 520 + 120 + 420) : null
+    // docked 정착 후 카드 플립(이미지 or 정보)
+    const tFlip = anyFlip ? setTimeout(() => setFlipped(true), 520 + 120 + 420) : null
     return () => { cancelAnimationFrame(raf); clearTimeout(tDock); clearTimeout(tInfo); if (tFlip) clearTimeout(tFlip) }
-  }, [reduced, canFlip])
+  }, [reduced, anyFlip])
 
   // body scroll lock
   useEffect(() => {
@@ -303,7 +310,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
 
   const infoBox = isMobile
     ? { left: 0, top: '46%', width: '100%', height: '54%' }
-    : { left: '42%', top: 0, width: '58%', height: '100%' }
+    : { left: '50%', top: 0, width: '50%', height: '100%' }
 
   return (
     <div
@@ -343,7 +350,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
           perspective: '1400px',
         }}
       >
-        {canFlip ? (
+        {anyFlip ? (
           <div
             style={{
               position: 'relative',
@@ -354,24 +361,31 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
               transition: reduced ? 'none' : 'transform 720ms cubic-bezier(0.4,0,0.2,1)',
             }}
           >
-            {/* 앞면 — 포스터 카드 */}
+            {/* 앞면 — 포스터 카드 (세로 유지) */}
             <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
               <PosterCard project={project} index={number} active={false} />
             </div>
-            {/* 뒷면 — 실제 작품 이미지 (contain: 가로·세로 모두 안 잘림) */}
-            <div style={{
+            {/* 뒷면 — 작품 이미지. flipWide(가로)는 박스 없이 사진만 contain(좌패딩·정보 50% 고려) */}
+            <div style={flipWide ? {
+              // 가로: 이미지 영역 중앙(카드 중심)에 박스 없이 contain. 검은 박스·그림자 제거.
+              position: 'absolute',
+              top: '50%', left: '50%',
+              ...wideBox,
+              transform: 'translate(-50%, -50%) rotateY(180deg)',
+              backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            } : {
               position: 'absolute', inset: 0,
               backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
               borderRadius: layout.radius.card,
               overflow: 'hidden',
-              backgroundColor: '#0e0e0e',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <img
                 src={flipImage}
                 alt={project.title}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: layout.radius.card }}
               />
             </div>
           </div>
@@ -417,18 +431,6 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
             }}>
               {project.titleEn || project.title}
             </h1>
-            {project.titleKo && (
-              <p style={{
-                margin: `${space[2]} 0 0`,
-                fontSize: typeToken.small.size,
-                fontFamily: 'Pretendard, sans-serif',
-                color: color.muted,
-                lineHeight: 1.5,
-                letterSpacing: '0.01em',
-              }}>
-                {project.titleKo}
-              </p>
-            )}
             {project.oneLiner && (
               <p style={{
                 marginTop: space[3],

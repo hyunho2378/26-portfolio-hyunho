@@ -4,7 +4,53 @@
 
 ---
 
-## 현재 단계: summary 재적용 + 데이터 반영(5절) 완료 → STEP 4(데이터 채우기) 대기
+## 현재 단계: flip 상세 전수 통일 규칙 적용 완료 → STEP 4(데이터 채우기) 대기
+
+---
+
+### flip 상세 전수 점검 — 통일 규칙(잘림·박스·침범 제거)
+- [x] 단일 코드 경로 + objectFit:contain + 투명 박스 → 모든 비율이 박스 안에서 자동 맞춤(잘림·검은박스 0)
+- [x] 가로(flipWide=flipInfoMode||flipLandscape, 9개): 박스 vw*0.43 × vh*0.72, 중심 vw*0.255 → 우측 끝 47% < 정보 50%(여유). 168%·#0e0e0e·boxShadow 제거
+- [x] 세로(flipImageMode·visual, 16개): 기존 2:3 카드 inset:0 contain, 투명, dockedCx vw*0.22 → 우측 끝 39% < 50%
+- [x] 컨테이너 dockedScale 상쇄 위해 박스 px를 /dockedScale로 계산(1440·2560 비율 동일 안전)
+- [x] 이미지 maxWidth/maxHeight:100% contain + radius(실제 이미지 모서리에 적용), 좌패딩 ≈4%
+- [x] infoBox 데스크톱 50%/50%(정보 더 오른쪽), gangwon-ci=flipLandscape로 이미 wide 처리
+- [x] 미사용 shadow import 제거, 빌드 통과 (✓ 1.49s)
+- [참고] 침범/잘림/박스 부재는 기하학적으로 보장(contain+47% 상한). 브라우저 스크린샷 실측은 미수행
+
+---
+
+### 가로 작품 flip 레이아웃 정밀 조정 (박스 제거·좌패딩·정보 50%)
+- [x] flipWide 뒷면: 검은 박스(#0e0e0e)·boxShadow 제거 → 박스 없이 사진만(contain, 살짝 radius)
+- [x] 가로 펼침 박스 폭 168%→`vw*0.43`(16:10), `/dockedScale`로 화면 px 상쇄. 좌패딩 4% ~ 우측 끝 47%
+- [x] dockedCx: flipWide만 `vw*0.255`(이미지 영역 중앙)로 — 좌패딩 확보·우측 안 겹침
+- [x] infoBox 데스크톱 `left 42%/width 58%` → `left 50%/width 50%`(정보 더 오른쪽, 43px 여유)
+- [x] 세로 작품(visual·wellow·lucid-link)은 dockedCx vw*0.22 유지 — 영향 없음
+- [x] flip 판정 consts를 geometry 위로 hoist(dockedCx에서 flipWide 사용), 미사용 shadow import 제거
+- [x] 빌드 통과 (✓ 1.60s)
+
+---
+
+### 가로 작품(flipInfoMode) 2단계 flip 연출
+- [x] ProjectDetail: flipWide 뒷면을 168% 즉시 가로 박스 → **2단계 분리**로 교체
+- [x] 1단계: 세로 카드 그대로 rotateY(180) — 앞뒤 모두 2:3이라 비율 충돌 0 (transform 640ms cubic-bezier(0.4,0,0.2,1))
+- [x] 2단계: flip 완료 +120ms 후 backside를 세로(2:3)→가로(3:2)로 width/height 전이(520ms cubic-bezier(0.16,1,0.3,1)). `expanded` state 추가
+- [x] 겹침 안전: 가로 최종 폭 = `vw*0.34`(36% 상한 이하), 카드 중심 vw*0.22 → 우측 끝 39%, 정보 42% (3% 여유). 컨테이너 scale 상쇄 위해 `/dockedScale`로 px 계산
+- [x] reduced-motion: 즉시 flipped+expanded 최종(가로) 상태
+- [x] 닫기: expanded→false(가로→세로 접기) 후 flipped→false(앞면) 역방향
+- [x] 세로 작품(visual·wellow·lucid-link)·우측 정보·hasThumb(flipInfoMode 제외) 영향 없음
+- [x] 빌드 통과 (✓ 1.72s)
+
+---
+
+### 이미지 키컬러 추출 → accent 반영
+- [x] scripts/extract-accent.mjs 작성(node-vibrant + sharp). sharp로 webp/gif→PNG 버퍼 변환 후 Vibrant 추출. 재실행 가능
+- [x] 보정 규칙: Hue 유지, L<0.22→0.36 / S<0.35→0.52 / L>0.85→0.78. 다크·골드(axiom·dalat·gangwon-ci·dah-leaflet)는 과보정 금지(L 하한만)
+- [x] 비교표 출력 + scripts/accent-results.json 저장
+- [x] 사용자 승인: "안전한 것만 적용" → 브랜드 일치/유사 15개만 accent 교체
+- [x] 교체 15: gangneung-pay·numer9·wontong-market·wellow·teapot-418·lucid-link·lucid-instagram·mumble-cardnews·gangwon-design-platform·hotissue·fromis9·memory-perfume·soft-petals·against-the-flow·dah-exhibition
+- [x] 유지 10(⚠ 추출 부적합 8 + NO IMAGE 2): axiom·dalat-vibe·gangwon-ci·kdh-poster·dah-character·gangwon-leaflet·glow-in·dorm-eco / oliveyoung-mens·dah-leaflet
+- [x] node-vibrant·sharp는 devDependencies(빌드 산출물 영향 없음). 빌드 통과 (✓ 1.56s)
 
 ---
 

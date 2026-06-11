@@ -1,0 +1,210 @@
+[
+  {
+    "id": "gangneung-pay",
+    "old": "#1D4ED8",
+    "extracted": "#1E4EDC",
+    "swatch": "Vibrant",
+    "corrected": "#1E4EDC",
+    "note": ""
+  },
+  {
+    "id": "numer9",
+    "old": "#02C75A",
+    "extracted": "#04C45C",
+    "swatch": "Vibrant",
+    "corrected": "#04C45C",
+    "note": ""
+  },
+  {
+    "id": "wontong-market",
+    "old": "#409E9B",
+    "extracted": "#57A797",
+    "swatch": "Vibrant",
+    "corrected": "#3DC1A7",
+    "note": ""
+  },
+  {
+    "id": "wellow",
+    "old": "#1A56FF",
+    "extracted": "#1C43FB",
+    "swatch": "Vibrant",
+    "corrected": "#1C43FB",
+    "note": ""
+  },
+  {
+    "id": "oliveyoung-mens",
+    "old": "#82DC28",
+    "extracted": null,
+    "swatch": "-",
+    "corrected": null,
+    "note": "NO IMAGE"
+  },
+  {
+    "id": "axiom",
+    "old": "#C9A227",
+    "extracted": "#24A0C8",
+    "swatch": "Vibrant",
+    "corrected": "#24A0C8",
+    "note": "except(dark)"
+  },
+  {
+    "id": "dah-exhibition",
+    "old": "#F5C518",
+    "extracted": "#C99A35",
+    "swatch": "Vibrant",
+    "corrected": "#C99A35",
+    "note": ""
+  },
+  {
+    "id": "teapot-418",
+    "old": "#C8E63C",
+    "extracted": "#C4E03C",
+    "swatch": "Vibrant",
+    "corrected": "#C4E03C",
+    "note": ""
+  },
+  {
+    "id": "dah-character",
+    "old": "#E27DA6",
+    "extracted": "#7F7F7F",
+    "swatch": "Vibrant",
+    "corrected": "#C13D3D",
+    "note": ""
+  },
+  {
+    "id": "lucid-link",
+    "old": "#E27DA6",
+    "extracted": "#D07398",
+    "swatch": "Vibrant",
+    "corrected": "#D07398",
+    "note": ""
+  },
+  {
+    "id": "dalat-vibe",
+    "old": "#1C224F",
+    "extracted": "#B97F46",
+    "swatch": "Vibrant",
+    "corrected": "#B97F46",
+    "note": "except(dark)"
+  },
+  {
+    "id": "glow-in-poster",
+    "old": "#9CAF88",
+    "extracted": "#7F5132",
+    "swatch": "Vibrant",
+    "corrected": "#7F5132",
+    "note": ""
+  },
+  {
+    "id": "lucid-instagram",
+    "old": "#E27DA6",
+    "extracted": "#A44C74",
+    "swatch": "Vibrant",
+    "corrected": "#A44C74",
+    "note": ""
+  },
+  {
+    "id": "mumble-cardnews",
+    "old": "#FF2D78",
+    "extracted": "#FB59BD",
+    "swatch": "Vibrant",
+    "corrected": "#FB59BD",
+    "note": ""
+  },
+  {
+    "id": "gangwon-design-platform",
+    "old": "#2D6CDF",
+    "extracted": "#3C9CBC",
+    "swatch": "Vibrant",
+    "corrected": "#3C9CBC",
+    "note": ""
+  },
+  {
+    "id": "gangwon-leaflet",
+    "old": "#2D6CDF",
+    "extracted": "#877787",
+    "swatch": "Vibrant",
+    "corrected": "#C13DC1",
+    "note": ""
+  },
+  {
+    "id": "gangwon-ci",
+    "old": "#1F2937",
+    "extracted": "#FC422D",
+    "swatch": "Vibrant",
+    "corrected": "#FC422D",
+    "note": "except(dark)"
+  },
+  {
+    "id": "dorm-eco-campaign",
+    "old": "#5BA85B",
+    "extracted": "#44BCB8",
+    "swatch": "Vibrant",
+    "corrected": "#44BCB8",
+    "note": ""
+  },
+  {
+    "id": "orbital-poster",
+    "old": "#6E7BD8",
+    "extracted": "#3580B5",
+    "swatch": "Vibrant",
+    "corrected": "#3580B5",
+    "note": ""
+  },
+  {
+    "id": "hotissue-infographic",
+    "old": "#C0392B",
+    "extracted": "#C8392B",
+    "swatch": "Vibrant",
+    "corrected": "#C8392B",
+    "note": ""
+  },
+  {
+    "id": "fromis9-album",
+    "old": "#8E7CC3",
+    "extracted": "#583496",
+    "swatch": "Vibrant",
+    "corrected": "#583496",
+    "note": ""
+  },
+  {
+    "id": "memory-perfume-typo",
+    "old": "#B8A07E",
+    "extracted": "#7F51AD",
+    "swatch": "Vibrant",
+    "corrected": "#7F51AD",
+    "note": ""
+  },
+  {
+    "id": "kdh-poster",
+    "old": "#B11226",
+    "extracted": "#CEC524",
+    "swatch": "Vibrant",
+    "corrected": "#CEC524",
+    "note": ""
+  },
+  {
+    "id": "soft-petals-poster",
+    "old": "#E27DA6",
+    "extracted": "#B4445C",
+    "swatch": "Vibrant",
+    "corrected": "#B4445C",
+    "note": ""
+  },
+  {
+    "id": "against-the-flow-poster",
+    "old": "#F2C200",
+    "extracted": "#D6A622",
+    "swatch": "Vibrant",
+    "corrected": "#D6A622",
+    "note": ""
+  },
+  {
+    "id": "dah-leaflet",
+    "old": "#3B4A6B",
+    "extracted": null,
+    "swatch": "-",
+    "corrected": null,
+    "note": "NO IMAGE"
+  }
+]

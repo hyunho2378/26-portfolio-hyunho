@@ -224,27 +224,22 @@ export default function AboutLayer({ open, onClose }) {
           }}
         >
           <ProfilePhoto />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: space[4], paddingTop: space[2] }}>
-            <SectionLabel>ABOUT</SectionLabel>
-            <p
-              style={{
-                fontSize: typeToken.bodyLg.size,
-                fontFamily: 'Pretendard, sans-serif',
-                color: color.paper,
-                lineHeight: typeToken.bodyLg.lh,
-                maxWidth: '480px',
-                whiteSpace: 'pre-line',
-              }}
-            >
-              {profile.intro}
-            </p>
-          </div>
-        </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: space[8], paddingTop: space[2], maxWidth: '480px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: space[4] }}>
+              <SectionLabel>ABOUT</SectionLabel>
+              <p
+                style={{
+                  fontSize: typeToken.bodyLg.size,
+                  fontFamily: 'Pretendard, sans-serif',
+                  color: color.paper,
+                  lineHeight: typeToken.bodyLg.lh,
+                  whiteSpace: 'pre-line',
+                }}
+              >
+                {profile.intro}
+              </p>
+            </div>
 
-        {/* ── 상단 2열 그리드 ── */}
-        <div className="about-layer-grid">
-          {/* 좌측 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: space[12] }}>
             <Block label="INTERESTED IN">
               <p style={{ fontSize: typeToken.body.size, fontFamily: 'Pretendard, sans-serif', color: color.paper, lineHeight: typeToken.body.lh }}>
                 {profile.interests.join(', ')}
@@ -256,6 +251,14 @@ export default function AboutLayer({ open, onClose }) {
                 {profile.character.map((c) => <SmallChip key={c} label={c} />)}
               </div>
             </Block>
+          </div>
+        </div>
+
+        {/* ── 상단 2열 그리드 ── */}
+        <div className="about-layer-grid">
+          {/* 좌측 */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: space[12] }}>
+            <CollapsibleList label="EDUCATION" items={profile.education} collapsible={false} />
 
             <Block label="GPA">
               <GpaBlock />
@@ -268,7 +271,6 @@ export default function AboutLayer({ open, onClose }) {
 
           {/* 우측 */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: space[12] }}>
-            <CollapsibleList label="EDUCATION" items={profile.education} collapsible={false} />
             <CollapsibleList label="AWARD" items={profile.awards} collapsible={false} />
           </div>
         </div>
