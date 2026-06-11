@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   *,
   *::before,
   *::after {
@@ -19,6 +20,8 @@
 
   body {
     @apply bg-ink text-paper font-body;
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   ::selection {
@@ -32,6 +35,7 @@
 }
 
 @layer components {
+
   /* 공통 섹션 패딩 — 전 섹션 통일 적용. 수직 128px, 수평 clamp(16px → 64px) */
   .sec {
     min-height: 100vh;
@@ -47,18 +51,22 @@
     height: min(72vh, 640px);
     overflow: hidden;
   }
+
   .stage.carousel-mode {
     touch-action: none;
     cursor: grab;
   }
+
   .stage.carousel-mode.is-dragging {
     cursor: grabbing;
   }
+
   .cards {
     position: absolute;
     inset: 0;
     transform-style: preserve-3d;
   }
+
   .card {
     position: absolute;
     left: 50%;

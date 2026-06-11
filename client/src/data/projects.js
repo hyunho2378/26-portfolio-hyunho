@@ -25,7 +25,7 @@ export const projects = [
     links: [
       { label: 'iOS 버전', url: 'https://gangneung-pay.vercel.app/' },
       { label: 'Android 버전', url: 'https://gangneung-pay-android.vercel.app/' },
-      { label: '프로젝트 웹사이트', url: 'https://gangneung-pay-ux-project.vercel.app/' },
+      { label: '프로젝트 포트폴리오', url: 'https://gangneung-pay-ux-project.vercel.app/' },
     ],
     pdfUrl: null,
     gallery: [],
@@ -46,7 +46,12 @@ export const projects = [
     thumbnail: '/thumbs/numer9.webp',
     contribution: 'PM, UX Research 25%, Service Design 90%, Frontend 100%',
     outcome: '지역사회 문제해결 PBL 경진대회 최우수상, 2026 AI 활용 대학생 로컬임팩트 포럼 최우수상, 실제 매장 매출 증가 및 예약 활성화, 후평동 상인회 협업 공식 매뉴얼 제작 및 디지털 리터러시 강연 진행 예정',
-    links: [{ label: '웹사이트', url: 'https://numer9-personal-ai.vercel.app/' }],
+    textColor: '#141416',
+    links: [
+      { label: 'AI 진단 서비스', url: 'https://numer9-ai-service.vercel.app/' },
+      { label: '네이버 플레이스', url: 'https://naver.me/xslKlF1g' },
+      { label: '프로젝트 포트폴리오', url: 'https://numer9-personal-ai.vercel.app/' },
+    ],
     pdfUrl: null,
     gallery: [],
     summary: '디지털이 낯선 64세 1인 미용실 사장님과 시술 결정이 어려운 손님, 두 사용자의 마찰을 동시에 줄이는 무간섭 서비스를 기획 및 배포해 실제 성과를 이끌어냈습니다.',
@@ -86,7 +91,7 @@ export const projects = [
     flipImageMode: true,
     contribution: 'UX Research 65%',
     outcome: '제18회 디지털인문예술전공 프로젝트 전시회 전공 동아리 부문 출품',
-    links: [{ label: '디자인 보기', url: 'https://www.figma.com/design/0x8rjGHE6m1qeU0Ggb0eaF/' }],
+    links: [{ label: 'UX/UI 보고서', url: 'https://www.figma.com/design/0x8rjGHE6m1qeU0Ggb0eaF/' }],
     pdfUrl: null, // TODO (UX/UI 보고서)
     gallery: [],
     summary: '운동 인프라가 부족한 비수도권 청년들은 진입 장벽과 함께할 사람의 부재로 웰니스 활동을 지속하기 어렵다. AI 맞춤 운동 루틴을 형성하고 기록을 공유하는 서비스를 기획하였다.',
@@ -233,7 +238,7 @@ export const projects = [
     contribution: 'UX Research 70%, UI Design 90%, Frontend 80%',
     outcome: '한림대-달랏대 국제협력 AI 워크숍 HIVE PROJECT 수료',
     links: [{ label: '웹사이트', url: 'https://dalat-vibe.vercel.app/' }],
-    pdfUrl: null, // TODO (PDF 보유)
+    pdfUrl: '/pdf/dalat-vibe.pdf',
     gallery: [],
     summary: 'Dalat Vibe는 OpenWeather API로 실시간 날씨 맥락에 따라 추천 장소와 UI가 즉각 전환되는 반응형 UX를 설계해 정보 탐색의 이원화를 해결했습니다. 현지 네트워크 한계를 고려해 앱 설치 없이 접근 가능한 웹 환경으로 구축했습니다.',
   },
@@ -280,12 +285,7 @@ export const projects = [
     strategy: '전공 키 컬러(핑크)와 글래스모피즘 기법 적용, 인스타그램 최적화 규격(3:4) 준수 및 시각적 위계 레이아웃',
     outcome: '게시물 도달률·인게이지먼트 대폭 상승, 일관된 브랜딩으로 학과 이미지 개선 및 소통 창구 확립',
     tools: ['Figma'],
-    links: [{ label: '인스타그램', url: '' }], // TODO url
-    pdfUrl: null,
-    gallery: [],
-  },
-  {
-    id: 'mumble-cardnews',
+    links: [{ label: '인스타그램', url: 'https://www.instagram.com/hallym_lucid/' }],
     titleEn: 'MUMBLE',
     label: 'Social Campaign',
     titleKo: '멈블 앰버서더 카드뉴스',
@@ -324,7 +324,7 @@ export const projects = [
     strategy: '기존 브랜드 아이덴티티의 톤앤매너를 유지하면서 사용자 흐름에 최적화된 레이아웃으로 UI 재설계',
     outcome: '제4회 강원디자인전람회 특별상 (사단법인 강원디자인협회장상)',
     tools: ['Figma', 'Adobe Illustrator'],
-    links: [{ label: '프로토타입', url: 'https://www.figma.com/proto/yDGBd9U1EiiYdU1aHaoMiF/Untitled?node-id=1-434&p=f&viewport=161%2C-3%2C0.02&t=5TbthuL4OkRHz57I-1&scaling=scale-down-width&content-scaling=fixed&starting-point-node-id=1%3A434&page-id=0%3A1' }], // TODO url
+    links: [{ label: '프로토타입', url: 'https://www.figma.com/proto/yDGBd9U1EiiYdU1aHaoMiF/%EA%B0%95%EC%9B%90%EB%94%94%EC%9E%90%EC%9D%B8%EC%A7%84%ED%9D%A5%EC%9B%90-%EC%97%AD%EB%9F%89-%EA%B0%95%ED%99%94-%ED%94%8C%EB%9E%AB%ED%8F%BC-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8-%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85?node-id=1-434&p=f&viewport=355%2C25%2C0.02&t=C9kZ5pKLjRnShftU-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A434&page-id=0%3A1' }],
     pdfUrl: null,
     gallery: [],
   },
@@ -356,7 +356,7 @@ export const projects = [
     label: 'Brand System',
     titleKo: '강원디자인랩 CI 디자인',
     title: "강원디자인랩 CI 디자인",
-    oneLiner: "역량강화 플랫폼 '강원디자인랩' CI 개발",
+    oneLiner: "역량강화 플랫폼 '강원디자인랩' CI 디자인",
     type: 'visual',
     category: 'BRANDING',
     period: '2025.07~2025.08 (2개월)',
@@ -365,12 +365,13 @@ export const projects = [
     flipLandscape: true,
     role: '단독 기획·제작',
     contribution: '단독 기획 및 제작 (100%)',
-    objective: '강원디자인진흥원 역량강화 플랫폼의 브랜드 정체성 확립 및 일관된 비주얼 시스템 구축을 위한 CI 개발',
+    objective: '강원디자인진흥원 역량강화 플랫폼의 브랜드 정체성 확립 및 일관된 비주얼 시스템 구축을 위한 CI 디자인',
     strategy: "'GDL' 이니셜을 기하학적 형태로 심볼화하여 연결성·혁신성을 강조하고 강원디자인진흥원의 디자인 톤 계승",
     outcome: '제4회 강원디자인전람회 입선',
     tools: ['Adobe Illustrator'],
     links: [{ label: 'CI 매뉴얼', url: '' }], // TODO url
-    pdfUrl: null,
+    pdfUrl: '/pdf/gangwon-ci.pdf',
+    pdfLabel: 'CI 매뉴얼',
     gallery: [],
   },
   {
@@ -436,7 +437,8 @@ export const projects = [
     outcome: '25-1 전공 프로젝트 전시회 우수상 (문화 콘텐츠 기초)',
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     links: [{ label: '작품', url: '' }], // TODO url
-    pdfUrl: null,
+    pdfUrl: '/pdf/hot-issue.pdf',
+    pdfLabel: '프로젝트 포트폴리오',
     gallery: [],
   },
   {
@@ -503,6 +505,7 @@ export const projects = [
     tools: ['Google Gemini', 'Adobe Illustrator', 'Adobe Photoshop'],
     links: [{ label: '작품', url: '' }], // TODO url
     pdfUrl: '/pdf/kdh-poster.pdf',
+    pdfLabel: '프로젝트 포트폴리오',
     gallery: [],
   },
   {
@@ -569,7 +572,7 @@ export const projects = [
     outcome: '전공 대/내외 행사 활용',
     tools: ['Adobe Illustrator'], // TODO 확인
     links: [],
-    pdfUrl: null,
+    pdfUrl: '/pdf/dah-leaflet.pdf',
     gallery: [{ src: '/thumbs/dah-leaflet-1.webp' }, { src: '/thumbs/dah-leaflet-2.webp' }],
     summary: '디지털인문예술전공 공식 리플렛 리뉴얼',
   },

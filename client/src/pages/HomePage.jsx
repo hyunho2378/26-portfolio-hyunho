@@ -135,7 +135,7 @@ export default function HomePage() {
                 letterSpacing: '0.04em',
               }}
             >
-              {profile.name} · {profile.nameEn}
+              {profile.name}
             </p>
           </div>
         </div>

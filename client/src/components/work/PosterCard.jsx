@@ -4,7 +4,7 @@ import { layout, shadow } from '../../tokens.js'
 export default function PosterCard({ project, index, active = false, dim = 0 }) {
   const { titleEn, titleKo, title, label, type, category, period, accent } = project
   const bg = accent || '#E27DA6'
-  const fg = contrastText(bg)
+  const fg = project.textColor || contrastText(bg)
 
   const mainTitle = titleEn || title || ''
   const subTitle = titleKo || ''

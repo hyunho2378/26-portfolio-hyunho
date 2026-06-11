@@ -19,7 +19,7 @@ function Fade({ show, delay = 0, reduced, children, style }) {
   )
 }
 
-function Block({ label, children }) {
+function Block({ label, children, accent }) {
   return (
     <div style={{ marginBottom: space[6] }}>
       <p style={{
@@ -27,7 +27,7 @@ function Block({ label, children }) {
         fontWeight: typeToken.label.weight,
         fontFamily: 'Pretendard, sans-serif',
         letterSpacing: typeToken.label.ls,
-        color: color.muted,
+        color: accent || color.accent,
         marginBottom: space[2],
       }}>
         {label}
@@ -44,6 +44,8 @@ function BodyText({ children }) {
       fontFamily: 'Pretendard, sans-serif',
       color: color.paper,
       lineHeight: 1.65,
+      wordBreak: 'keep-all',
+      overflowWrap: 'break-word',
     }}>
       {children}
     </p>
@@ -81,7 +83,7 @@ function ToolChip({ children }) {
       display: 'inline-block',
       padding: `${space[1]} ${space[3]}`,
       border: `1px solid ${color.line}`,
-      borderRadius: layout.radius.pill,
+      borderRadius: layout.radius.md,
       fontSize: typeToken.small.size,
       fontFamily: 'Pretendard, sans-serif',
       color: color.muted,
@@ -106,11 +108,11 @@ function LinkBtn({ href, children, accent }) {
         gap: space[1],
         padding: `${space[2]} ${space[4]}`,
         border: `1px solid ${accent}`,
-        borderRadius: layout.radius.pill,
+        borderRadius: layout.radius.md,
         fontSize: typeToken.label.size,
         fontWeight: typeToken.label.weight,
         fontFamily: 'Pretendard, sans-serif',
-        letterSpacing: typeToken.label.ls,
+        letterSpacing: '0.04em',
         color: accent,
         textDecoration: 'none',
         marginRight: space[3],
@@ -141,10 +143,10 @@ function DevContent({ project }) {
   const { outcome, links, contribution, accent } = project
   return (
     <>
-      {contribution && <Block label="CONTRIBUTION"><BodyText>{contribution}</BodyText></Block>}
-      {outcome && <Block label="OUTCOME"><BodyText>{outcome}</BodyText></Block>}
+      {contribution && <Block label="CONTRIBUTION" accent={accent}><BodyText>{contribution}</BodyText></Block>}
+      {outcome && <Block label="OUTCOME" accent={accent}><BodyText>{outcome}</BodyText></Block>}
       {links?.length > 0 && (
-        <Block label="LINKS">
+        <Block label="LINKS" accent={accent}>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {links.filter((l) => l.url).map((l) => (
               <LinkBtn key={l.label} href={l.url} accent={accent}>{l.label}</LinkBtn>
@@ -161,12 +163,12 @@ function UxContent({ project }) {
   const liveLinks = (links || []).filter((l) => l.url)
   return (
     <>
-      {contribution && <Block label="CONTRIBUTION"><BodyText>{contribution}</BodyText></Block>}
-      {outcome && <Block label="OUTCOME"><BodyText>{outcome}</BodyText></Block>}
+      {contribution && <Block label="CONTRIBUTION" accent={accent}><BodyText>{contribution}</BodyText></Block>}
+      {outcome && <Block label="OUTCOME" accent={accent}><BodyText>{outcome}</BodyText></Block>}
       {(pdfUrl || liveLinks.length > 0) && (
-        <Block label="LINKS">
+        <Block label="LINKS" accent={accent}>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {pdfUrl && <LinkBtn href={pdfUrl} accent={accent}>PDF 보기</LinkBtn>}
+            {pdfUrl && <LinkBtn href={pdfUrl} accent={accent}>{project.pdfLabel || 'PDF 보기'}</LinkBtn>}
             {liveLinks.map((l) => <LinkBtn key={l.label} href={l.url} accent={accent}>{l.label}</LinkBtn>)}
           </div>
         </Block>
@@ -176,16 +178,26 @@ function UxContent({ project }) {
 }
 
 function VisualContent({ project }) {
-  const { objective, strategy, outcome, tools } = project
+  const { objective, strategy, outcome, tools, links, pdfUrl, pdfLabel, accent } = project
+  const liveLinks = (links || []).filter((l) => l.url)
+  const hasLinks = pdfUrl || liveLinks.length > 0
   return (
     <>
-      {objective && <Block label="OBJECTIVE"><BodyText>{objective}</BodyText></Block>}
-      {strategy && <Block label="STRATEGY"><BodyText>{strategy}</BodyText></Block>}
-      {outcome && <Block label="RESULT"><BodyText>{outcome}</BodyText></Block>}
+      {objective && <Block label="OBJECTIVE" accent={accent}><BodyText>{objective}</BodyText></Block>}
+      {strategy && <Block label="STRATEGY" accent={accent}><BodyText>{strategy}</BodyText></Block>}
+      {outcome && <Block label="RESULT" accent={accent}><BodyText>{outcome}</BodyText></Block>}
       {tools?.length > 0 && (
-        <Block label="TOOLS">
+        <Block label="TOOLS" accent={accent}>
           <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: space[1] }}>
             {tools.map((t) => <ToolChip key={t}>{t}</ToolChip>)}
+          </div>
+        </Block>
+      )}
+      {hasLinks && (
+        <Block label="LINKS" accent={accent}>
+          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            {pdfUrl && <LinkBtn href={pdfUrl} accent={accent}>{pdfLabel || 'PDF 보기'}</LinkBtn>}
+            {liveLinks.map((l) => <LinkBtn key={l.label} href={l.url} accent={accent}>{l.label}</LinkBtn>)}
           </div>
         </Block>
       )}
@@ -438,6 +450,8 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
                 fontFamily: 'Pretendard, sans-serif',
                 color: color.muted,
                 lineHeight: 1.6,
+                wordBreak: 'keep-all',
+                overflowWrap: 'break-word',
               }}>
                 {project.oneLiner}
               </p>
@@ -452,6 +466,8 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
                 fontFamily: 'Pretendard, sans-serif',
                 color: color.paper,
                 lineHeight: 1.75,
+                wordBreak: 'keep-all',
+                overflowWrap: 'break-word',
               }}>
                 {project.summary}
               </p>

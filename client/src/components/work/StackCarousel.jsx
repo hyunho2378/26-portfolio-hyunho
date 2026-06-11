@@ -9,7 +9,7 @@ const ARC_ANGLE = 9         // 카드 1칸당 각도(deg) — 클수록 더 휨
 const ARC_RADIUS = 1300     // 회전 반지름(px) — 클수록 완만한 아치
 const MAX_VISIBLE = 5       // abs(offset) 초과 시 숨김
 const WHEEL_THRESHOLD = 10  // 휠 델타 임계
-const CARD_W = 'clamp(180px, 16vw, 260px)'
+const CARD_W = 'clamp(180px, 16vw, 320px)'
 const CONTAINER_H = 'clamp(380px, 56vh, 560px)'
 
 const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = {}, onSelect }, ref) {

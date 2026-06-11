@@ -51,7 +51,7 @@ export const layout = {
     containerWide: '1440px',    // 와이드 섹션
     containerSite: '1680px',    // 포트폴리오 기본 컨테이너
     pagePadX: { base: '16px', md: '40px', xl: '64px' },
-    radius: { sm: '4px', md: '8px', card: '14px', pill: '999px' }, // card=이미지 카드 전용
+    radius: { sm: '4px', md: '8px', card: '12px', pill: '999px' }, // card=이미지 카드 전용
 }
 
 export const shadow = {
