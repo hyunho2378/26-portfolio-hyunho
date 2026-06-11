@@ -1,0 +1,4 @@
+*.zip
+node_modules/
+dist/
+client/public/pdf/4. 포스터_20222583 주현호.pdf

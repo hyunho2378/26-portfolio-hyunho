@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    @apply bg-ink text-paper font-body;
+  }
+
+  ::selection {
+    @apply bg-paper text-ink;
+  }
+
+  /* 키보드 focus-visible: accent 핑크 링. 마우스 클릭엔 미표시. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-ink;
+  }
+}
+
+@layer components {
+  /* 공통 섹션 패딩 — 전 섹션 통일 적용. 수직 128px, 수평 clamp(16px → 64px) */
+  .sec {
+    min-height: 100vh;
+    padding-top: 112px;
+    padding-bottom: 112px;
+    padding-left: clamp(20px, 4vw, 100px);
+    padding-right: clamp(20px, 4vw, 100px);
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    height: min(72vh, 640px);
+    overflow: hidden;
+  }
+  .stage.carousel-mode {
+    touch-action: none;
+    cursor: grab;
+  }
+  .stage.carousel-mode.is-dragging {
+    cursor: grabbing;
+  }
+  .cards {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+  .card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: 90% center;
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+}
