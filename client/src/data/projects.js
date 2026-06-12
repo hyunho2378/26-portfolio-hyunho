@@ -504,7 +504,7 @@ export const projects = [
     strategy: '글로벌 OTT 플랫폼 공식 포스터 스타일 벤치마킹, AI 기술 활용 정교한 주인공 캐릭터 디자인 적용',
     outcome: '전문적 레이아웃 구성으로 기획의 상업적 가능성 및 시나리오 시각화 역량 어필',
     tools: ['Google Gemini', 'Adobe Illustrator', 'Adobe Photoshop'],
-    links: [{ label: '작품', url: '' }], // TODO url
+    links: [{ label: '프로젝트 포트폴리오', url: 'https://lgh1726.wixsite.com/in-my-will' }],
     pdfUrl: '/pdf/kdh-poster.pdf',
     pdfLabel: '프로젝트 포트폴리오',
     gallery: [],
