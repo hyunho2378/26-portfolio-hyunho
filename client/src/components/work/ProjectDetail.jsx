@@ -413,7 +413,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
           overflowY: 'auto',
           padding: isMobile
             ? `${space[6]} clamp(${layout.pagePadX.base}, 5vw, ${layout.pagePadX.xl}) ${space[8]}`
-            : `clamp(48px, 8vh, 96px) clamp(${space[8]}, 4vw, ${space[16]})`,
+            : `${dockedCy - (rect.height * dockedScale) / 2}px clamp(${space[8]}, 4vw, ${space[16]})`,
           boxSizing: 'border-box',
         }}
       >

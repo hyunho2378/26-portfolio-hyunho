@@ -83,12 +83,12 @@ export const profile = {
 
   experience: [
     { year: '2026', text: 'Korea Design Membership Plus (KDM+) 7기 선발', tier: 'star', accent: true },
-    { year: '2026', text: 'UX Study with 김성우 교수 (수업 외 자율 참여)', tier: 'normal' },
+    { year: '2026', text: 'UX Study with 김성우 교수', tier: 'normal' },
     { year: '2026', text: '동해시 AX 전환 연구 과제 with 김성우 교수', tier: 'normal' },
     { year: '2026', text: '디지털인문예술전공 AX 전환', tier: 'star', accent: true },
     { year: '2026', text: '제18회 디지털인문예술전공 프로젝트 전시회 웹사이트 제작', tier: 'star', accent: true },
-    { year: '2026', text: '제4회 포스터 공모전 웹사이트 제작', tier: 'star', accent: true },
-    { year: '2026', text: '제1회 신규 캐릭터 공모전 웹사이트 제작', tier: 'star', accent: true },
+    { year: '2026', text: '제4회 디지털인문예술전공 프로젝트 전시회 포스터 공모전 웹사이트 제작', tier: 'star', accent: true },
+    { year: '2026', text: '제1회 디지털인문예술전공 신규 캐릭터 공모전 웹사이트 제작', tier: 'star', accent: true },
     { year: '2026', text: '디지털인문예술전공 전공박람회 부스 운영', tier: 'normal' },
     { year: '2026', text: '디지털인문예술전공 프로젝트 전시회 총괄 운영', tier: 'normal' },
     { year: '2025', text: '한림대-달랏대 국제협력 AI 워크숍 HIVE PROJECT 수료', tier: 'normal' },

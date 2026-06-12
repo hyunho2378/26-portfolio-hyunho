@@ -35,8 +35,8 @@ export const projects = [
     id: 'numer9',
     titleEn: 'N9',
     label: 'AI Service Design',
-    titleKo: 'AI 활용 무간섭 시니어 디자인',
-    title: 'Numer9 (N9)',
+    titleKo: 'AI 활용 무간섭 서비스 디자인',
+    title: 'N9',
     oneLiner: '디지털 소외 시니어를 위한 AI 무간섭 서비스 디자인',
     type: 'ux',
     flipInfoMode: true,
@@ -352,7 +352,7 @@ export const projects = [
   },
   {
     id: 'gangwon-ci',
-    titleEn: 'Gangwon Design Lab',
+    titleEn: 'Gangwon Design Lab CI',
     label: 'Brand System',
     titleKo: '강원디자인랩 CI 디자인',
     title: "강원디자인랩 CI 디자인",
@@ -483,6 +483,7 @@ export const projects = [
     tools: ['Adobe Illustrator', 'Adobe Photoshop', 'Google Gemini'],
     links: [{ label: '작품', url: '' }], // TODO url
     pdfUrl: '/pdf/memory-perfume-typo.pdf',
+    pdfLabel: '프로젝트 포트폴리오',
     gallery: [],
   },
   {
@@ -546,7 +547,7 @@ export const projects = [
     contribution: '단독 기획 및 제작 (100%)',
     objective: '디지털로 매개된 도시의 군중 속에서, 부모와 아이의 직접적 손 접촉(휴먼 터치)을 통해 글로벌 시스템과 로컬 신체 접촉이 교차하는 연결의 순간을 시각화',
     strategy: '군중 8명을 무채색·디지털 디바이스로 통일해 알고리즘적 동질성을 표현하고, 부모와 아이만 군중과 반대 방향으로 손잡고 걷게 배치. 노란색을 시스템 표준 신호색이자 어린이 보호색으로 이중 활용해 글로컬을 한 화면에 압축',
-    outcome: '제4회 디지털인문예술전공 프로젝트 전시회 포스터 디자인 공모전 최우수상',
+    outcome: '제4회 디지털인문예술전공 프로젝트 전시회 포스터 디자인 공모전 최우수상,전시회 공식 포스터 선정',
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     links: [],
     pdfUrl: null,
