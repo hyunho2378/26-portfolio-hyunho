@@ -71,8 +71,12 @@ export const projects = [
     thumbnail: '/thumbs/wontong-market.webp',
     contribution: 'PM, UX Research 65%, UI Design 100%',
     outcome: '제17회 디지털인문예술전공 프로젝트 전시회 최우수상(총장상), 인제군 사업 반영 가능성 검토',
-    links: [{ label: '프로젝트 사이트', url: 'https://wontongtraditionalmarket2025.figma.site/' }],
+    links: [
+      { label: '원통시장 웹사이트', url: 'https://wontongtraditionalmarket2025.figma.site/' },
+      { label: '프로젝트 포트폴리오', url: 'https://rootl004y.wixsite.com/injesinnam/%EC%9D%B8%EC%A0%9C%EC%9D%98-%EB%A7%9B-%EB%A7%88%EC%B9%B4-%EC%97%AC%EA%B8%B0' },
+    ],
     pdfUrl: '/pdf/wontong-market.pdf',
+    pdfLabel: '프로젝트 PPT',
     gallery: [],
     summary: '인제군 원통시장의 복합 위기 해결을 목표로, 오프라인 공간과 디지털 플랫폼을 결합해 ‘스쳐 가는 경유지’를 ‘머무는 문화 거점’으로 만드는 지속가능한 지역 활성화 선순환 구조 설계 프로젝트',
   },
@@ -97,6 +101,86 @@ export const projects = [
     summary: '운동 인프라가 부족한 비수도권 청년들은 진입 장벽과 함께할 사람의 부재로 웰니스 활동을 지속하기 어렵다. AI 맞춤 운동 루틴을 형성하고 기록을 공유하는 서비스를 기획하였다.',
   },
   {
+    id: 'eum',
+    titleEn: 'E:UM',
+    label: 'AI-Assisted Service Design',
+    titleKo: '이:음',
+    title: '이:음 — 동해 시니어 AI 디지털 교육 서비스',
+    oneLiner: '디지털이 어려운 동해 시니어와 인력 부족 교육 현장을 AI로 연결하는 디지털 교육 서비스',
+    type: 'ux',
+    flipInfoMode: true,
+    role: 'Service Design / Team Project(6)', // 팀 동해번쩍: 주현호·김동연·반효은·이동건·이루기·장민우
+    period: '2026', // TODO 정확한 기간
+    accent: '#4B82DF',
+    thumbnail: '/thumbs/eum.webp',
+    contribution: '', // TODO
+    outcome: '', // TODO
+    links: [{ label: '키오스크', url: 'https://donghae-kiosk.vercel.app/' }],
+    pdfUrl: '/pdf/eum.pdf',
+    gallery: [],
+    summary: '', // TODO 100자 소개
+  },
+  {
+    id: 'volume-up',
+    titleEn: 'Volume Up!',
+    label: 'Public Service Design',
+    titleKo: '볼륨업',
+    title: 'Volume Up! — 청소년 도서관 공공 서비스',
+    oneLiner: '청소년이 직접 만드는 도서관, 학교와 잇는 공공 서비스 디자인',
+    type: 'ux',
+    flipInfoMode: true,
+    role: 'Service Design / Team Project(6)', // UIA Team 4: 주현호·장주희·김가은·임수빈·정수민·김가영
+    period: '2026', // TODO 정확한 기간
+    accent: '#009FE3',
+    thumbnail: '/thumbs/volume-up.webp',
+    contribution: '', // TODO
+    outcome: 'University Impact Alliance(UIA) 임팩톤 @춘천 청소년 도서관 활성화 우수상',
+    links: [],
+    pdfUrl: '/pdf/volume-up.pdf',
+    gallery: [],
+    summary: '', // TODO 100자 소개
+  },
+  {
+    id: 'gts',
+    titleEn: 'Global Tourism System',
+    label: 'Inbound Tourism Service Design',
+    titleKo: 'GTS',
+    title: 'Global Tourism System — 춘천 인바운드 관광 플랫폼',
+    oneLiner: '춘천을 방문하는 외국인을 위한 실시간 대중교통 기반 관광 플랫폼',
+    type: 'ux',
+    flipInfoMode: true,
+    role: 'Service Design / Team Project(6)', // Team Bomnae Helper: Hyun Ho·Min woo·Seung Hun·Mi ju·Fudai·Hyun Jin
+    period: '2026', // TODO 정확한 기간
+    accent: '#0075F4',
+    thumbnail: '/thumbs/gts.webp',
+    contribution: '', // TODO
+    outcome: 'Station C 글로컬 솔버톤 @춘천 스마트 모빌리티 플랫폼 우수상',
+    links: [{ label: '웹사이트', url: 'https://global-tourism-system.vercel.app/' }],
+    pdfUrl: '/pdf/gts.pdf',
+    gallery: [],
+    summary: '', // TODO 100자 소개
+  },
+  {
+    id: 'maero',
+    titleEn: 'MAERO',
+    label: 'Local Character IP Business',
+    titleKo: '마에로',
+    title: '마에로 — 축제 캐릭터 IP 비즈니스',
+    oneLiner: '축제에 녹아드는 여정을 담은 캐릭터 IP 비즈니스',
+    type: 'ux',
+    flipInfoMode: true,
+    role: 'Service Design / Team Project(4)', // Team 버터와플: 주현호·조영은·허주은·김서영
+    period: '2026', // TODO 정확한 기간
+    accent: '#F5C518',
+    thumbnail: '/thumbs/maero.webp',
+    contribution: '', // TODO
+    outcome: '',
+    links: [{ label: '인스타그램', url: 'https://www.instagram.com/maero_ppippiro/' }],
+    pdfUrl: '/pdf/maero.pdf',
+    gallery: [],
+    summary: '', // TODO 100자 소개
+  },
+  {
     id: 'oliveyoung-mens',
     titleEn: "Oliveyoung Men's Edit",
     label: 'App UX Optimization',
@@ -104,20 +188,42 @@ export const projects = [
     title: '올리브영 앱 맨즈에딧 UX 개선',
     oneLiner: '올리브영 앱 남성 그루밍 카테고리 UX 개선',
     type: 'ux',
+    flipInfoMode: true,
     role: '',
     period: '2026',
     accent: '#82DC28',
-    thumbnail: null,
+    thumbnail: '/thumbs/oliveyoung-mens.webp',
     contribution: '',
     outcome: '',
     links: [],
-    pdfUrl: null,
+    pdfUrl: '/pdf/oliveyoung-mens.pdf',
     gallery: [],
     summary: '',
-    comingSoon: true,
   },
 
   // ─────────────────────────── DEV ───────────────────────────
+  {
+    id: 'dah-special-lecture',
+    titleEn: 'AI Age Designer',
+    label: 'Special Lecture',
+    titleKo: 'AI 시대, 디자이너의 일',
+    title: 'AI Age Designer',
+    oneLiner: 'AI 시대 디자이너의 역할과 바이브코딩 워크플로우를 디인예입문 수업에서 직접 특강으로 전달',
+    type: 'dev',
+    category: 'VIBE CODING',
+    role: 'Lecturer / Personal Project',
+    summary: 'AI 시대 디자이너의 생존 전략과 Claude Code·Antigravity 기반 바이브코딩 워크플로우를 직접 설계하고 디지털인문예술입문 교과목 수강생들에게 특강으로 진행했다. 특강 자료 자체도 바이브코딩으로 제작·배포했다.',
+    period: '2026',
+    accent: '#E27DA6',
+    thumbnail: '/thumbs/dah-special-lecture.webp',
+    contribution: 'Lecture Design 100%, Frontend 100%',
+    outcome: '디지털인문예술입문 교과목 AI·바이브코딩 특강 진행',
+    tools: ['Claude Code', 'Antigravity', 'Claude', 'Figma', 'Vercel'],
+    links: [{ label: '특강 웹사이트', url: 'https://26-1-dah-special-lecture.vercel.app/' }],
+    pdfUrl: null,
+    gallery: [],
+    flipInfoMode: true,
+  },
   {
     id: 'axiom',
     titleEn: 'AXIOM',
@@ -241,6 +347,32 @@ export const projects = [
     pdfUrl: '/pdf/dalat-vibe.pdf',
     gallery: [],
     summary: 'Dalat Vibe는 OpenWeather API로 실시간 날씨 맥락에 따라 추천 장소와 UI가 즉각 전환되는 반응형 UX를 설계해 정보 탐색의 이원화를 해결했습니다. 현지 네트워크 한계를 고려해 앱 설치 없이 접근 가능한 웹 환경으로 구축했습니다.',
+  },
+
+  {
+    id: 'vortex',
+    titleEn: 'VORTEX',
+    label: 'XR Fencing / AI Workshop',
+    titleKo: 'VORTEX',
+    title: 'VORTEX — XR 펜싱 (2026 KDM+ AI Workshop)',
+    oneLiner: '거리와 타이밍을 몸으로 익히는 몰입형 펜싱 XR',
+    type: 'dev',
+    category: 'VIBE CODING',
+    flipInfoMode: true,
+    role: 'Vibe Coding / Team Project(3)', // Team 1: 김다영·주현호·윤소희
+    period: '2026', // TODO 정확한 기간
+    accent: '#3C5E8B',
+    thumbnail: '/thumbs/vortex.webp',
+    contribution: '', // TODO
+    outcome: 'Korea Design Membership Plus(KDM+) 강원지부 생성형 AI 워크숍 몰입형 펜싱 XR 우수상',
+    links: [
+      { label: '펜싱 사이트', url: 'https://arena-vert-seven.vercel.app/' },
+      { label: '브랜드 사이트', url: 'https://brand-rho-liart.vercel.app/' },
+      { label: 'PPT 웹', url: 'https://ppt-three-pi.vercel.app/' },
+    ],
+    pdfUrl: '/pdf/vortex.pdf',
+    gallery: [],
+    summary: '', // TODO 100자 소개
   },
 
   // ────────────────────────── VISUAL ──────────────────────────
@@ -438,7 +570,7 @@ export const projects = [
     tools: ['Adobe Illustrator', 'Adobe Photoshop'],
     links: [{ label: '작품', url: '' }], // TODO url
     pdfUrl: '/pdf/hot-issue.pdf',
-    pdfLabel: '프로젝트 포트폴리오',
+    pdfLabel: '프로젝트 PPT',
     gallery: [],
   },
   {
@@ -506,7 +638,7 @@ export const projects = [
     tools: ['Google Gemini', 'Adobe Illustrator', 'Adobe Photoshop'],
     links: [{ label: '프로젝트 포트폴리오', url: 'https://lgh1726.wixsite.com/in-my-will' }],
     pdfUrl: '/pdf/kdh-poster.pdf',
-    pdfLabel: '프로젝트 포트폴리오',
+    pdfLabel: '프로젝트 PPT',
     gallery: [],
   },
   {

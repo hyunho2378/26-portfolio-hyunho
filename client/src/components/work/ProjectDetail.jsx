@@ -3,6 +3,7 @@ import { X, ArrowUpRight } from 'lucide-react'
 import { color, type as typeToken, space, layout } from '../../tokens.js'
 import { contrastText } from '../../lib/contrastText.js'
 import PosterCard from './PosterCard.jsx'
+import Lightbox from './Lightbox.jsx'
 
 // ── 우측 정보 stagger 래퍼 ─────────────────────────────────────
 function Fade({ show, delay = 0, reduced, children, style }) {
@@ -139,26 +140,8 @@ function LinkBtn({ href, children, accent }) {
 }
 
 // ── 타입별 콘텐츠 ──────────────────────────────────────────────
-function DevContent({ project }) {
-  const { outcome, links, contribution, accent } = project
-  return (
-    <>
-      {contribution && <Block label="CONTRIBUTION" accent={accent}><BodyText>{contribution}</BodyText></Block>}
-      {outcome && <Block label="OUTCOME" accent={accent}><BodyText>{outcome}</BodyText></Block>}
-      {links?.length > 0 && (
-        <Block label="LINKS" accent={accent}>
-          <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {links.filter((l) => l.url).map((l) => (
-              <LinkBtn key={l.label} href={l.url} accent={accent}>{l.label}</LinkBtn>
-            ))}
-          </div>
-        </Block>
-      )}
-    </>
-  )
-}
-
-function UxContent({ project }) {
+// dev/ux 공통 — PDF 버튼 + 라이브 링크
+function WorkContent({ project }) {
   const { outcome, links, pdfUrl, contribution, accent } = project
   const liveLinks = (links || []).filter((l) => l.url)
   return (
@@ -271,6 +254,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   const [infoVisible, setInfoVisible] = useState(reduced)
   const [closing, setClosing] = useState(false)
   const [flipped, setFlipped] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)  // 작품 이미지 탭 → 풀스크린 확대
 
   // phase machine — center에서 잠깐 머문 뒤 docked로 (전체 약 0.5s 단축)
   useEffect(() => {
@@ -397,7 +381,8 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
               <img
                 src={flipImage}
                 alt={project.title}
-                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: layout.radius.card }}
+                onClick={(e) => { e.stopPropagation(); setLightboxOpen(true) }}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: layout.radius.card, cursor: 'zoom-in', pointerEvents: 'auto' }}
               />
             </div>
           </div>
@@ -480,18 +465,19 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
               <img
                 src={project.thumbnail}
                 alt={project.title}
+                onClick={(e) => { e.stopPropagation(); setLightboxOpen(true) }}
                 style={{
                   width: '100%', maxWidth: '100%', height: 'auto',
                   display: 'block', borderRadius: layout.radius.md,
                   border: `1px solid ${color.line}`,
+                  cursor: 'zoom-in',
                 }}
               />
             </Fade>
           )}
 
           <Fade show={infoVisible} delay={180} reduced={reduced} style={{ marginTop: space[8] }}>
-            {project.type === 'dev' && <DevContent project={project} />}
-            {project.type === 'ux' && <UxContent project={project} />}
+            {(project.type === 'dev' || project.type === 'ux') && <WorkContent project={project} />}
             {project.type === 'visual' && <VisualContent project={project} />}
           </Fade>
 
@@ -529,6 +515,17 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
       >
         <X size={18} aria-hidden="true" />
       </button>
+
+      {/* 작품 이미지 풀스크린 확대(모바일 가독성). zIndex 200으로 상세 위에 뜸. */}
+      {lightboxOpen && flipImage && (
+        <Lightbox
+          items={[{ src: flipImage, alt: project.titleEn }]}
+          index={0}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() => {}}
+          onNext={() => {}}
+        />
+      )}
     </div>
   )
 }

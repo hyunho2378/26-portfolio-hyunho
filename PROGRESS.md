@@ -339,6 +339,27 @@
 
 ---
 
+### FIX — 신규 프로젝트 5개 + 올리브영 PDF·이미지 (2026-09-07)
+- [x] `data/projects.js` — UX 4개(eum, volume-up, gts, maero) 올리브영 앞에 추가, dev 1개(vortex) dalat-vibe 뒤 추가. 링크 URL 전부 반영. summary·contribution·period는 TODO 주석으로 비움.
+- [x] 올리브영 `comingSoon` 제거, `thumbnail: /thumbs/oliveyoung-mens.webp`, `pdfUrl: /pdf/oliveyoung-mens.pdf`, `flipInfoMode: true`.
+- [x] 썸네일 6개 webp 변환(cwebp -q 90, 원본 전부 3840x2160 가로 → flipInfoMode).
+- [x] 빌드 통과 (✓ built in 2.61s), 50MB 초과 파일 없음.
+- [ ] `client/public/pdf/oliveyoung-mens.pdf` 미배치 — 넣어야 상세 PDF 뷰어 동작.
+- [ ] 신규 5개 summary(100자)·contribution·period, eum outcome 미기입.
+
+---
+
+### FIX — 신규 6개 상세 실측 점검 (2026-09-07, Chrome 1440x900 헤드리스)
+- [x] 7개 상세(eum·volume-up·gts·maero·oliveyoung-mens·vortex·dalat-vibe) 실제 클릭·플립 후 좌표 실측: 이미지 l=58(4%) r=677(47%), 정보 패널 left=720(50%) → 겹침 0, 좌측 잘림 0, 높이 348 < vh*0.72. objectFit contain, 뒷면 배경 rgba(0,0,0,0)·boxShadow none(검은 박스 없음). 기존 wideBox 규칙이 명세와 이미 일치 → 값 변경 없음.
+- [x] `ProjectDetail.jsx` — dev 상세에 PDF 버튼이 없던 문제 수정. 동일했던 DevContent/UxContent를 `WorkContent` 하나로 합치고 dev·ux 공용. vortex·dalat-vibe PDF 버튼 노출 확인.
+- [x] 세로 작품 회귀 없음: wellow(flipImageMode)·glow-in-poster(visual) 480x679, 좌측 77 유지.
+- [x] `oliveyoung-mens.pdf` 배치 확인(200, application/pdf, 16.7MB), 카드 클릭 → 상세 정상.
+- [x] 빌드 통과 (✓ built in 1.73s), 콘솔 에러 0.
+- [ ] PDF 용량 압축 권장: 올리브영 16.7M, maero 25M, volume-up 18M, vortex 14M, eum 11M.
+- 참고: UX 탭이 9장이 되며 아크 양 끝 카드(eum·volume-up)는 중앙 부근이 다른 카드/컨테이너에 가려 가장자리 일부만 클릭됨(휠·드래그로 중앙 이동 후 클릭이 정상 동선).
+
+---
+
 ## 미정 (사용자 확인 필요)
 
 1. 배포: 기존 레포 덮기 vs 새 레포·새 URL
