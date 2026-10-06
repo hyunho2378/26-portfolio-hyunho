@@ -1,5 +1,7 @@
 # DESIGN.md
 
+> 2026-10 주의: 5절(헤더), 6절(세로 스크롤, 앵커 이동), 7절(Work 그리드)은 초기 계획이며 현재 구현과 다르다. 화면 구조와 컴포넌트는 IA.md, COMPONENTS.md, ROUTES.md가 기준이다. 색, 타이포, 간격, 모션 규칙(2, 3, 4, 8, 9절)은 유효하다.
+
 > 주현호 UX · 바이브 코딩 포트폴리오
 > 색·간격·폰트는 전부 `src/tokens.js`에서만 꺼낸다. 이 문서는 그 근거와 규칙.
 > 특강 사이트에서 계승: 디자인 시스템 전부. 폐기: 3D 캐러셀, 무헤더 풀페이지.
@@ -121,3 +123,15 @@ emmeliestrand.se의 "호버 없이 항상 보이는 그리드" 흡수. 3D 캐러
   이 예외는 해당 연출 컴포넌트 내부로 한정하며, 다른 어떤 곳에도 scale을 전파하지 않는다.
 - 가로 스크롤 금지(전 구간).
 - B형 hover/focus 필수, 320~2560 전 구간 깨짐 없음.
+
+---
+
+## 10. 2026-10 추가 규칙
+
+- **토큰 확장**: `tracking`(자간), `motion`(fast 150, base 250, slow 400, reveal 600ms와 ease), `color.overlay`(soft, base, strong), `inkAlpha`, `type.micro`, `layout.touch`, `layout.infoMax`, `layout.rule`, `layout.track`, `layout.barMax`. 컴포넌트에 HEX, rgba, font-family, letter-spacing, 임의 px 문자열을 쓰지 않는다.
+- **프로젝트 accent 대비**: 카드 배경은 accent 원색을 쓴다. 어두운 배경 위의 글자, 링크, 테두리는 `readableAccent`로 4.5:1 이상으로 보정한 색을 쓴다.
+- **포커스**: 전역 `:focus-visible` 링만 쓴다. 인라인 `outline`와 onFocus, onBlur 핸들러를 쓰지 않는다.
+- **reduced-motion**: `index.css`가 모든 animation과 transition을 제거한다.
+- **페이지 전환**: opacity만 사용한다. 위치 이동과 radius 애니메이션은 쓰지 않는다.
+- **가운데점 금지**: 화면에 보이는 문자열에 `·`를 쓰지 않는다(IA.md 5절).
+- **shadow**: 캐러셀 카드의 깊이감용 `shadow.poster`, `shadow.posterActive` 토큰만 허용한다.

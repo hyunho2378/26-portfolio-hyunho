@@ -8,16 +8,11 @@
 
 | path | 컴포넌트 | 설명 |
 |---|---|---|
-| `/` | `HomePage` | 세로 스크롤: Hero · About · Work · Contact |
-| `/work/:id` | `WorkDetailPage` | `:id` = projects.js id. 없으면 NotFound |
+| `/` | `HomePage` | 캐러셀 홈. About, Contact, Project Detail은 이 화면 위의 레이어 |
+| `/work/:id` | `WorkDetailPage` | `:id` = projects.js id. 없으면 NotFound. 앱 안에서는 링크하지 않고 직접 URL로만 진입 |
 | `*` | `NotFoundPage` | 404 |
 
----
-
-## 2. 구조
-
 ```jsx
-// App.jsx (계승, 변경 없음)
 <BrowserRouter>
   <ScrollToTop />
   <Routes>
@@ -30,50 +25,29 @@
 </BrowserRouter>
 ```
 
-- `Layout` = Header + `<Outlet />` + Footer + F키 전체화면. (특강의 SectionDots·useFullpageNav 제거)
-- `ScrollToTop`: 라우트 변경 시 스크롤 최상단.
+---
+
+## 2. 레이어 (라우트 아님)
+
+About, Contact, Project Detail은 URL이 바뀌지 않는다. 상태는 `HomePage`의 `useState`가 가진다(`aboutOpen`, `contactOpen`, `detail`). localStorage, sessionStorage는 쓰지 않는다.
 
 ---
 
-## 3. 헤더 앵커 (라우트 아님)
+## 3. 카드 클릭
 
-홈 내 섹션 이동. 헤더 `WORK·ABOUT·CONTACT` → 섹션 id로 `scrollIntoView({behavior:'smooth'})`.
+```
+StackCarousel pointerup → onSelect(project, rect) → HomePage.detail 설정 → ProjectDetail 레이어
+```
 
-- 섹션 id: `hero · about · work · contact`
-- 상세(`/work/:id`)에서 앵커 클릭 시: `navigate('/')` 후 해당 섹션으로(`location.state` 또는 hash). localStorage 금지.
+- 클릭 판정은 6px 이하 이동일 때만 한다. 그 이상은 드래그로 본다.
+- `comingSoon` 프로젝트는 상세를 열지 않는다.
 
 ---
 
-## 4. 카드 클릭 분기
-
-```
-ProjectCard 클릭 → navigate(`/work/${id}`)  (항상 상세 경유)
-  WorkDetailPage 에서 타입별:
-   ├─ dev    → 라이브 링크 버튼(들) → 새 탭 (강릉페이 3 / AXIOM 2 / 그 외 1)
-   ├─ ux     → PDF 뷰어 (웹형이면 라이브 링크)
-   └─ visual → 갤러리/라이트박스 (외부 진입 없음)
-```
-
-특강의 "정면 카드만 새 탭 직행" 모델 폐기. 모든 카드 = 상세 경유(visual 포함, 상세가 갤러리).
-
----
-
-## 5. WorkDetailPage 로직
-
-```
-const { id } = useParams()
-const project = projects.find(p => p.id === id)
-if (!project) → <NotFoundPage />
-PageTransition 으로 감싸고 type 분기 렌더
-```
-
----
-
-## 6. vercel.json (계승)
+## 4. vercel.json
 
 ```json
 { "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
 ```
 
-- Root Directory `client`. Build `npm run build`, Output `dist`.
-- 배포: **기존 레포 이어가기 vs 새 레포** — STEP 0에서 확정(미정).
+Root Directory `client`. Build `npm run build`, Output `dist`.

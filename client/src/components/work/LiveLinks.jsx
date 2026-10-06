@@ -1,5 +1,5 @@
 import { ExternalLink } from 'lucide-react'
-import { color, type as typeToken, space, layout } from '../../tokens.js'
+import { color, type as typeToken, space, layout, font, tracking, motion } from '../../tokens.js'
 
 export default function LiveLinks({ links }) {
   if (!links || links.length === 0) return null
@@ -26,21 +26,15 @@ export default function LiveLinks({ links }) {
               color: isSingle ? color.accent : color.paper,
               fontSize: isSingle ? typeToken.body.size : typeToken.small.size,
               fontWeight: 600,
-              fontFamily: 'Pretendard, sans-serif',
-              letterSpacing: '0.08em',
+              fontFamily: font.body,
+              letterSpacing: tracking.lg,
               textTransform: 'uppercase',
               textDecoration: 'none',
-              transition: 'opacity 150ms ease, border-color 150ms ease, color 150ms ease',
-              outline: 'none',
+              transition: `opacity ${motion.fast} ease, border-color ${motion.fast} ease, color ${motion.fast} ease`,
               alignSelf: 'flex-start',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7' }}
             onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
-            onFocus={(e) => {
-              e.currentTarget.style.outline = `2px solid ${color.accent}`
-              e.currentTarget.style.outlineOffset = '3px'
-            }}
-            onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
           >
             <ExternalLink size={16} aria-hidden="true" />
             {label}

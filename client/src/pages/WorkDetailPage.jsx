@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeft } from 'lucide-react'
 import { projects } from '../data/projects.js'
-import { color, type as typeToken, space, layout } from '../tokens.js'
+import { color, type as typeToken, space, layout, font, tracking, motion } from '../tokens.js'
+import { readableAccent } from '../lib/contrastText.js'
 import PageTransition from '../components/ui/PageTransition.jsx'
 import LiveLinks from '../components/work/LiveLinks.jsx'
 import NotFoundPage from './NotFoundPage.jsx'
@@ -66,7 +67,7 @@ function LeftImage({ project }) {
           style={{
             fontSize: typeToken.h3.size,
             fontWeight: typeToken.h3.weight,
-            fontFamily: 'Pretendard, sans-serif',
+            fontFamily: font.body,
             color: color.muted,
             textAlign: 'center',
             padding: space[6],
@@ -85,10 +86,10 @@ function MetaItem({ label, value }) {
   return (
     <div>
       <p style={{
-        fontSize: '11px',
-        fontFamily: 'Pretendard, sans-serif',
+        fontSize: typeToken.micro.size,
+        fontFamily: font.body,
         color: color.muted,
-        letterSpacing: '0.12em',
+        letterSpacing: tracking.xl,
         textTransform: 'uppercase',
         marginBottom: space[1],
       }}>
@@ -96,7 +97,7 @@ function MetaItem({ label, value }) {
       </p>
       <p style={{
         fontSize: typeToken.small.size,
-        fontFamily: 'Pretendard, sans-serif',
+        fontFamily: font.body,
         color: color.paper,
         lineHeight: 1.5,
       }}>
@@ -114,10 +115,10 @@ function RightContent({ project }) {
     return (
       <div>
         <p style={{
-          fontSize: '11px',
-          fontFamily: 'Pretendard, sans-serif',
+          fontSize: typeToken.micro.size,
+          fontFamily: font.body,
           color: color.muted,
-          letterSpacing: '0.12em',
+          letterSpacing: tracking.xl,
           textTransform: 'uppercase',
           marginBottom: space[4],
         }}>
@@ -140,20 +141,20 @@ function RightContent({ project }) {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '8px',
+              gap: space[2],
               padding: `${space[3]} ${space[5]}`,
               border: `1px solid ${color.accent}`,
               borderRadius: layout.radius.pill,
               fontSize: typeToken.label.size,
               fontWeight: typeToken.label.weight,
-              fontFamily: 'Pretendard, sans-serif',
+              fontFamily: font.body,
               letterSpacing: typeToken.label.ls,
               color: color.accent,
               textDecoration: 'none',
-              transition: 'background-color 150ms ease',
+              transition: `background-color ${motion.fast} ease`,
               alignSelf: 'flex-start',
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = `${color.accent}18` }}
+            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = color.accentSoft }}
             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent' }}
           >
             PDF 열기
@@ -161,7 +162,7 @@ function RightContent({ project }) {
         )}
         {hasLinks && <LiveLinks links={links} />}
         {!pdfUrl && !hasLinks && (
-          <p style={{ fontSize: typeToken.small.size, fontFamily: 'Pretendard, sans-serif', color: color.muted }}>
+          <p style={{ fontSize: typeToken.small.size, fontFamily: font.body, color: color.muted }}>
             준비 중
           </p>
         )}
@@ -175,7 +176,7 @@ function RightContent({ project }) {
         {objective && <MetaItem label="목표" value={objective} />}
         {strategy && <MetaItem label="전략" value={strategy} />}
         {tools && tools.length > 0 && (
-          <MetaItem label="도구" value={tools.join(' · ')} />
+          <MetaItem label="도구" value={tools.join(', ')} />
         )}
       </div>
     )
@@ -210,27 +211,21 @@ export default function WorkDetailPage() {
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: space[1],
               background: 'none',
               border: 'none',
               cursor: 'pointer',
               padding: `${space[2]} 0`,
-              fontSize: '13px',
+              fontSize: typeToken.small.size,
               fontWeight: 600,
-              fontFamily: 'Pretendard, sans-serif',
-              letterSpacing: '0.10em',
+              fontFamily: font.body,
+              letterSpacing: tracking.xl,
               color: color.muted,
               textTransform: 'uppercase',
-              transition: 'color 150ms ease',
-              outline: 'none',
+              transition: `color ${motion.fast} ease`,
             }}
             onMouseEnter={(e) => { e.currentTarget.style.color = color.paper }}
             onMouseLeave={(e) => { e.currentTarget.style.color = color.muted }}
-            onFocus={(e) => {
-              e.currentTarget.style.outline = `2px solid ${color.accent}`
-              e.currentTarget.style.outlineOffset = '3px'
-            }}
-            onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
           >
             <ChevronLeft size={14} aria-hidden="true" />
             Work
@@ -251,27 +246,27 @@ export default function WorkDetailPage() {
               <p style={{
                 fontSize: typeToken.label.size,
                 fontWeight: typeToken.label.weight,
-                fontFamily: 'Pretendard, sans-serif',
+                fontFamily: font.body,
                 letterSpacing: typeToken.label.ls,
                 color: color.muted,
                 textTransform: 'uppercase',
               }}>
-                {TYPE_LABEL[type] || type}{category ? ` · ${category}` : ''} · {period}
+                {[TYPE_LABEL[type] || type, category, period].filter(Boolean).join(', ')}
               </p>
 
               {/* 제목 */}
               <div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: space[3] }}>
                   <span
                     aria-hidden="true"
                     style={{
                       display: 'inline-block',
-                      width: '8px',
-                      height: '8px',
+                      width: space[2],
+                      height: space[2],
                       borderRadius: '50%',
-                      backgroundColor: accent || color.accent,
+                      backgroundColor: readableAccent(accent),
                       flexShrink: 0,
-                      marginTop: '8px',
+                      marginTop: space[2],
                     }}
                   />
                   <h1 style={{
@@ -279,7 +274,7 @@ export default function WorkDetailPage() {
                     fontWeight: typeToken.h1.weight,
                     lineHeight: typeToken.h1.lh,
                     letterSpacing: typeToken.h1.ls,
-                    fontFamily: 'Pretendard, sans-serif',
+                    fontFamily: font.body,
                     color: color.paper,
                   }}>
                     {title}
@@ -289,7 +284,7 @@ export default function WorkDetailPage() {
                   <p style={{
                     marginTop: space[3],
                     fontSize: typeToken.bodyLg.size,
-                    fontFamily: 'Pretendard, sans-serif',
+                    fontFamily: font.body,
                     color: color.muted,
                     lineHeight: typeToken.bodyLg.lh,
                   }}>

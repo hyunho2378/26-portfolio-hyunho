@@ -1,9 +1,9 @@
 import { contrastText } from '../../lib/contrastText.js'
-import { layout, shadow } from '../../tokens.js'
+import { layout, shadow, font, tracking, color, inkAlpha } from '../../tokens.js'
 
 export default function PosterCard({ project, index, active = false, dim = 0 }) {
   const { titleEn, titleKo, title, label, type, category, period, accent } = project
-  const bg = accent || '#E27DA6'
+  const bg = accent || color.accent
   const fg = project.textColor || contrastText(bg)
 
   const mainTitle = titleEn || title || ''
@@ -33,9 +33,9 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           <p style={{
             margin: 0,
             fontSize: 'clamp(9px, 0.7vw, 11px)',
-            fontFamily: 'Pretendard, sans-serif',
+            fontFamily: font.body,
             fontWeight: 700,
-            letterSpacing: '0.12em',
+            letterSpacing: tracking.xl,
             textTransform: 'uppercase',
             lineHeight: 1.3,
             color: fg,
@@ -50,8 +50,8 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
             <p style={{
               margin: '2px 0 0',
               fontSize: 'clamp(9px, 0.7vw, 11px)',
-              fontFamily: 'Pretendard, sans-serif',
-              letterSpacing: '0.06em',
+              fontFamily: font.body,
+              letterSpacing: tracking.lg,
               lineHeight: 1.3,
               color: fg,
               opacity: 0.6,
@@ -76,9 +76,9 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           margin: 0,
           fontSize: 'clamp(20px, 1.7vw, 32px)',
           fontWeight: 600,
-          fontFamily: 'Pretendard, sans-serif',
+          fontFamily: font.body,
           lineHeight: 1.1,
-          letterSpacing: '-0.01em',
+          letterSpacing: tracking.snug,
           color: fg,
           display: '-webkit-box',
           WebkitLineClamp: 2,
@@ -92,7 +92,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           <p style={{
             margin: 'clamp(6px, 0.6vw, 10px) 0 0',
             fontSize: 'clamp(11px, 0.9vw, 14px)',
-            fontFamily: 'Pretendard, sans-serif',
+            fontFamily: font.body,
             lineHeight: 1.35,
             color: fg,
             opacity: 0.7,
@@ -111,9 +111,9 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         <span style={{
           fontSize: 'clamp(28px, 3vw, 52px)',
           fontWeight: 700,
-          fontFamily: 'Pretendard, sans-serif',
+          fontFamily: font.body,
           lineHeight: 1,
-          letterSpacing: '-0.02em',
+          letterSpacing: tracking.tight,
           color: fg,
           opacity: 0.85,
         }}>
@@ -129,7 +129,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundColor: `rgba(18,18,18,${dim})`,
+            backgroundColor: inkAlpha(dim),
             borderRadius: layout.radius.card,
             pointerEvents: 'none',
           }}

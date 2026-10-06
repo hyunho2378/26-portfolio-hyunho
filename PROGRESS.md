@@ -4,6 +4,43 @@
 
 ---
 
+## 2026-10-06 최신화, 디버깅, About 개편
+
+### 완료
+- [최신화] Figma 프로파일 기준 profile.js 반영. 수상 3건, 활동 3건, 경험 5건 추가, 수상명 표기 갱신, Tools 수치와 GitHub 추가, Instagram 노출
+- [하드코딩] components, pages의 HEX/rgba, font-family, letter-spacing, 고정 px 글자 크기와 간격을 tokens로 이관. 검색 결과 0건
+- [죽은 코드] import 그래프에서 도달 불가한 14개 파일 삭제(COMPONENTS.md 7절)
+- [버그] projects.js에서 LUCID 인스타그램과 멈블 카드뉴스가 한 객체로 합쳐져 LUCID 카드가 사라지던 문제 수정(id mumble-cardnews 분리)
+- [버그] accent가 어두운 프로젝트(8개는 3:1 미만)의 상세 라벨, 링크가 배경에 묻히던 문제 수정(readableAccent)
+- [About] 한 화면 4장 페이지형(PROFILE, AWARD, ACTIVITIES, EXPERIENCE). 키보드, 스와이프, 큰 화면 확대. 320, 390 폭 가로 넘침 0
+- [공용화] useLayer 훅, IconButton. About, Contact의 중복 코드 제거. 인라인 outline 핸들러 제거
+- [상세] 수상 단일 출처화(profile.awards.project). 상세에 AWARD 블록 추가, outcome에서 수상 문구 제거
+- [표기] 가운데점 정리(역할은 슬래시, 병렬 명사는 와/과, 구분용은 제거)
+- [문서] IA.md, COMPONENTS.md, ROUTES.md 재작성, DESIGN.md, PATTERNS.md 안내와 추가 규칙
+- [검증] eslint 오류 0(경고 3), 빌드 통과
+
+### 진행중
+- 없음
+
+### 2026-10-06 후속
+- 수상 연결 확정: 동해시 아이디어톤 대상은 eum, 앵커 참여 대학(원)생 최우수상은 numer9. Town MICE는 작품 자료가 없어 About 수상 목록에만 둠
+- 캐러셀 Enter/Space로 상세 열기 추가(키보드 접근)
+- 모바일 전수 검증: 홈, Contact, About 4장, 상세 32개를 390, 320 폭에서 측정. 가로 넘침 0, 44px 미만 0, 라벨 대비 4.5 이상 전부 통과
+- 터치 영역 보정: 홈 로고, 탭, 상세 링크 버튼, 상세 닫기를 44px로
+- html color-scheme dark(스크롤바)
+
+### 다음
+- 사용자 확인 대기 항목(블로커) 처리
+- 배포(git push)는 사용자 승인 후
+
+### 블로커
+- eum, maero, oliveyoung-mens, volume-up, gts 등 UX 프로젝트의 contribution, period, role 등 data/projects.js의 TODO 항목(사용자 제공 필요)
+
+---
+
+## 이전 기록
+
+
 ## 현재 단계: flip 상세 전수 통일 규칙 적용 완료 → STEP 4(데이터 채우기) 대기
 
 ---

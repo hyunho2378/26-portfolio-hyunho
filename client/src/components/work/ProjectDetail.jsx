@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { X, ArrowUpRight } from 'lucide-react'
-import { color, type as typeToken, space, layout } from '../../tokens.js'
-import { contrastText } from '../../lib/contrastText.js'
+import { profile } from '../../data/profile.js'
+import { color, type as typeToken, space, layout, font, tracking, motion, carousel } from '../../tokens.js'
+import { contrastText, readableAccent } from '../../lib/contrastText.js'
 import PosterCard from './PosterCard.jsx'
 import Lightbox from './Lightbox.jsx'
 
@@ -12,7 +13,7 @@ function Fade({ show, delay = 0, reduced, children, style }) {
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0px)' : 'translateY(20px)',
       transition: reduced ? 'none'
-        : `opacity 360ms ease ${delay}ms, transform 360ms cubic-bezier(0.22,1,0.36,1) ${delay}ms`,
+        : `opacity 360ms ease ${delay}ms, transform 360ms ${motion.ease} ${delay}ms`,
       ...style,
     }}>
       {children}
@@ -26,7 +27,7 @@ function Block({ label, children, accent }) {
       <p style={{
         fontSize: typeToken.label.size,
         fontWeight: typeToken.label.weight,
-        fontFamily: 'Pretendard, sans-serif',
+        fontFamily: font.body,
         letterSpacing: typeToken.label.ls,
         color: accent || color.accent,
         marginBottom: space[2],
@@ -38,11 +39,27 @@ function Block({ label, children, accent }) {
   )
 }
 
+function AwardList({ awards, accent }) {
+  if (!awards || awards.length === 0) return null
+  return (
+    <Block label="AWARD" accent={accent}>
+      <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: space[2] }}>
+        {awards.map((a) => (
+          <li key={a.text} style={{ display: 'flex', gap: space[3] }}>
+            <span style={{ flexShrink: 0, fontSize: typeToken.caption.size, paddingTop: space[1], fontFamily: font.body, color: color.muted }}>{a.year}</span>
+            <span style={{ minWidth: 0, fontSize: typeToken.small.size, fontFamily: font.body, lineHeight: typeToken.small.lh, color: color.paper }}>{a.text}</span>
+          </li>
+        ))}
+      </ul>
+    </Block>
+  )
+}
+
 function BodyText({ children }) {
   return (
     <p style={{
       fontSize: typeToken.body.size,
-      fontFamily: 'Pretendard, sans-serif',
+      fontFamily: font.body,
       color: color.paper,
       lineHeight: 1.65,
       wordBreak: 'keep-all',
@@ -58,17 +75,17 @@ function MetaRow({ label, value }) {
   return (
     <div style={{ display: 'flex', gap: space[4], marginBottom: space[2] }}>
       <span style={{
-        flexShrink: 0, width: '88px',
+        flexShrink: 0, width: space[20],
         fontSize: typeToken.small.size,
-        fontFamily: 'Pretendard, sans-serif',
-        letterSpacing: '0.04em',
+        fontFamily: font.body,
+        letterSpacing: tracking.md,
         color: color.muted,
       }}>
         {label}
       </span>
       <span style={{
         fontSize: typeToken.small.size,
-        fontFamily: 'Pretendard, sans-serif',
+        fontFamily: font.body,
         color: color.paper,
         lineHeight: 1.5,
       }}>
@@ -86,7 +103,7 @@ function ToolChip({ children }) {
       border: `1px solid ${color.line}`,
       borderRadius: layout.radius.md,
       fontSize: typeToken.small.size,
-      fontFamily: 'Pretendard, sans-serif',
+      fontFamily: font.body,
       color: color.muted,
       marginRight: space[2],
       marginBottom: space[2],
@@ -107,13 +124,14 @@ function LinkBtn({ href, children, accent }) {
         display: 'inline-flex',
         alignItems: 'center',
         gap: space[1],
-        padding: `${space[2]} ${space[4]}`,
+        minHeight: layout.touch,
+        padding: `0 ${space[4]}`,
         border: `1px solid ${accent}`,
         borderRadius: layout.radius.md,
         fontSize: typeToken.label.size,
         fontWeight: typeToken.label.weight,
-        fontFamily: 'Pretendard, sans-serif',
-        letterSpacing: '0.04em',
+        fontFamily: font.body,
+        letterSpacing: tracking.md,
         color: accent,
         textDecoration: 'none',
         marginRight: space[3],
@@ -142,12 +160,15 @@ function LinkBtn({ href, children, accent }) {
 // ── 타입별 콘텐츠 ──────────────────────────────────────────────
 // dev/ux 공통 — PDF 버튼 + 라이브 링크
 function WorkContent({ project }) {
-  const { outcome, links, pdfUrl, contribution, accent } = project
+  const { outcome, links, pdfUrl, contribution } = project
+  const accent = readableAccent(project.accent)
+  const awards = profile.awards.filter((a) => a.project === project.id)
   const liveLinks = (links || []).filter((l) => l.url)
   return (
     <>
       {contribution && <Block label="CONTRIBUTION" accent={accent}><BodyText>{contribution}</BodyText></Block>}
       {outcome && <Block label="OUTCOME" accent={accent}><BodyText>{outcome}</BodyText></Block>}
+      <AwardList awards={awards} accent={accent} />
       {(pdfUrl || liveLinks.length > 0) && (
         <Block label="LINKS" accent={accent}>
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -161,14 +182,17 @@ function WorkContent({ project }) {
 }
 
 function VisualContent({ project }) {
-  const { objective, strategy, outcome, tools, links, pdfUrl, pdfLabel, accent } = project
+  const { objective, strategy, outcome, tools, links, pdfUrl, pdfLabel } = project
+  const accent = readableAccent(project.accent)
+  const awards = profile.awards.filter((a) => a.project === project.id)
   const liveLinks = (links || []).filter((l) => l.url)
   const hasLinks = pdfUrl || liveLinks.length > 0
   return (
     <>
       {objective && <Block label="OBJECTIVE" accent={accent}><BodyText>{objective}</BodyText></Block>}
       {strategy && <Block label="STRATEGY" accent={accent}><BodyText>{strategy}</BodyText></Block>}
-      {outcome && <Block label="RESULT" accent={accent}><BodyText>{outcome}</BodyText></Block>}
+      {outcome && <Block label="OUTCOME" accent={accent}><BodyText>{outcome}</BodyText></Block>}
+      <AwardList awards={awards} accent={accent} />
       {tools?.length > 0 && (
         <Block label="TOOLS" accent={accent}>
           <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: space[1] }}>
@@ -196,11 +220,9 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  const accentColor = project.accent || color.accent
+  const accentColor = readableAccent(project.accent)
 
   // 좌측 미디어: dev/ux=썸네일 / visual=갤러리. 없으면 포스터 유지.
-  const galleryImgs = project.type === 'visual' ? (project.gallery || []) : []
-  const hasGallery = galleryImgs.length > 0
   const hasThumb = project.type !== 'visual' && !project.flipImageMode && !project.flipInfoMode && !!project.thumbnail
 
   // ── flip 판정 (geometry보다 먼저: dockedCx 계산에 flipWide 필요) ──
@@ -253,12 +275,12 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   const [dimIn, setDimIn] = useState(reduced)
   const [infoVisible, setInfoVisible] = useState(reduced)
   const [closing, setClosing] = useState(false)
-  const [flipped, setFlipped] = useState(false)
+  const [flipped, setFlipped] = useState(reduced && anyFlip)
   const [lightboxOpen, setLightboxOpen] = useState(false)  // 작품 이미지 탭 → 풀스크린 확대
 
   // phase machine — center에서 잠깐 머문 뒤 docked로 (전체 약 0.5s 단축)
   useEffect(() => {
-    if (reduced) { if (anyFlip) setFlipped(true); return }
+    if (reduced) return undefined
     const raf = requestAnimationFrame(() => { setPhase('center'); setDimIn(true) })
     // center 등장(520ms) + 짧은 텀(120ms) 후 docked로
     const tDock = setTimeout(() => { setPhase('docked') }, 520 + 120)
@@ -343,7 +365,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
               ? 'transform 520ms cubic-bezier(0.16,1,0.3,1)'
               : posterTransition[phase],
           willChange: 'transform',
-          perspective: '1400px',
+          perspective: carousel.flipPerspective,
         }}
       >
         {anyFlip ? (
@@ -402,12 +424,12 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
           boxSizing: 'border-box',
         }}
       >
-        <div style={{ maxWidth: '520px', width: '100%' }}>
+        <div style={{ maxWidth: layout.infoMax, width: '100%' }}>
           <Fade show={infoVisible} delay={0} reduced={reduced}>
             <p style={{
               fontSize: typeToken.label.size,
               fontWeight: typeToken.label.weight,
-              fontFamily: 'Pretendard, sans-serif',
+              fontFamily: font.body,
               letterSpacing: typeToken.label.ls,
               color: accentColor,
               marginBottom: space[3],
@@ -420,7 +442,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
             <h1 style={{
               fontSize: typeToken.h1.size,
               fontWeight: typeToken.h1.weight,
-              fontFamily: 'Pretendard, sans-serif',
+              fontFamily: font.body,
               lineHeight: typeToken.h1.lh,
               letterSpacing: typeToken.h1.ls,
               color: color.paper,
@@ -432,7 +454,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
               <p style={{
                 marginTop: space[3],
                 fontSize: typeToken.body.size,
-                fontFamily: 'Pretendard, sans-serif',
+                fontFamily: font.body,
                 color: color.muted,
                 lineHeight: 1.6,
                 wordBreak: 'keep-all',
@@ -448,7 +470,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
             <Fade show={infoVisible} delay={110} reduced={reduced} style={{ marginTop: space[5] }}>
               <p style={{
                 fontSize: typeToken.body.size,
-                fontFamily: 'Pretendard, sans-serif',
+                fontFamily: font.body,
                 color: color.paper,
                 lineHeight: 1.75,
                 wordBreak: 'keep-all',
@@ -501,17 +523,14 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
           position: 'absolute', top: space[6], right: space[6], zIndex: 5,
           background: 'none', border: `1px solid ${color.line}`,
           borderRadius: layout.radius.pill,
-          width: '42px', height: '42px',
+          width: layout.touch, height: layout.touch,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', color: color.paper,
           opacity: infoVisible ? 1 : 0,
           transition: 'opacity 200ms ease',
-          outline: 'none',
         }}
         onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.7' }}
         onMouseLeave={(e) => { e.currentTarget.style.opacity = infoVisible ? '1' : '0' }}
-        onFocus={(e) => { e.currentTarget.style.outline = `2px solid ${color.accent}`; e.currentTarget.style.outlineOffset = '2px' }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
       >
         <X size={18} aria-hidden="true" />
       </button>

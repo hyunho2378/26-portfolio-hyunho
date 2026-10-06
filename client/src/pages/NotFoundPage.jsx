@@ -5,7 +5,7 @@ export default function NotFoundPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
       <span
-        className="font-mono text-xs uppercase tracking-[0.14em]"
+        className="font-mono text-xs uppercase tracking-label"
         style={{ color: color.muted }}
       >
         404

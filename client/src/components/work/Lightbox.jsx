@@ -1,8 +1,8 @@
 import { useEffect, useCallback } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { color, space, layout } from '../../tokens.js'
+import { color, space, layout, font, motion, type as typeToken } from '../../tokens.js'
 
-const EASE = 'cubic-bezier(0.22,1,0.36,1)'
+const EASE = motion.ease
 
 export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
   const item = items[index]
@@ -34,15 +34,14 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '44px',
-    height: '44px',
+    width: layout.touch,
+    height: layout.touch,
     background: 'none',
     border: `1px solid ${color.line}`,
     borderRadius: layout.radius.pill,
     cursor: 'pointer',
     color: color.paper,
-    transition: `opacity 150ms ${EASE}`,
-    outline: 'none',
+    transition: `opacity ${motion.fast} ${EASE}`,
     flexShrink: 0,
   }
 
@@ -56,7 +55,7 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
         position: 'fixed',
         inset: 0,
         zIndex: 200,
-        backgroundColor: 'rgba(24,24,24,0.92)',
+        backgroundColor: color.overlay.base,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -72,11 +71,6 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
         style={{ ...btnStyle, position: 'absolute', top: space[4], right: space[4] }}
         onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.6' }}
         onMouseLeave={(e) => { e.currentTarget.style.opacity = '1' }}
-        onFocus={(e) => {
-          e.currentTarget.style.outline = `2px solid ${color.accent}`
-          e.currentTarget.style.outlineOffset = '2px'
-        }}
-        onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
       >
         <X size={20} aria-hidden="true" />
       </button>
@@ -99,11 +93,6 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
           style={{ ...btnStyle, opacity: hasPrev ? 1 : 0.2, cursor: hasPrev ? 'pointer' : 'default' }}
           onMouseEnter={(e) => { if (hasPrev) e.currentTarget.style.opacity = '0.6' }}
           onMouseLeave={(e) => { if (hasPrev) e.currentTarget.style.opacity = '1' }}
-          onFocus={(e) => {
-            e.currentTarget.style.outline = `2px solid ${color.accent}`
-            e.currentTarget.style.outlineOffset = '2px'
-          }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
         >
           <ChevronLeft size={20} aria-hidden="true" />
         </button>
@@ -126,8 +115,8 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
           {item.alt && (
             <p
               style={{
-                fontSize: '13px',
-                fontFamily: 'Pretendard, sans-serif',
+                fontSize: typeToken.small.size,
+                fontFamily: font.body,
                 color: color.muted,
                 textAlign: 'center',
               }}
@@ -137,8 +126,8 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
           )}
           <p
             style={{
-              fontSize: '12px',
-              fontFamily: 'Pretendard, sans-serif',
+              fontSize: typeToken.caption.size,
+              fontFamily: font.body,
               color: color.muted,
             }}
           >
@@ -153,11 +142,6 @@ export default function Lightbox({ items, index, onClose, onPrev, onNext }) {
           style={{ ...btnStyle, opacity: hasNext ? 1 : 0.2, cursor: hasNext ? 'pointer' : 'default' }}
           onMouseEnter={(e) => { if (hasNext) e.currentTarget.style.opacity = '0.6' }}
           onMouseLeave={(e) => { if (hasNext) e.currentTarget.style.opacity = '1' }}
-          onFocus={(e) => {
-            e.currentTarget.style.outline = `2px solid ${color.accent}`
-            e.currentTarget.style.outlineOffset = '2px'
-          }}
-          onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
         >
           <ChevronRight size={20} aria-hidden="true" />
         </button>

@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import { color, font, space } from './src/tokens.js'
+import { color, font, space, tracking } from './src/tokens.js'
 
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
@@ -19,6 +19,7 @@ export default {
         mono: font.mono.split(',').map((f) => f.trim()),
       },
       spacing: space,
+      letterSpacing: tracking,
     },
   },
   plugins: [],

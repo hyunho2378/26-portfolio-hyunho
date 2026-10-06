@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { color } from '../../tokens.js'
+import { color, motion } from '../../tokens.js'
 
 export default function Splash({ onDone }) {
   const [logoVisible, setLogoVisible] = useState(false)
   const [splashOut, setSplashOut] = useState(false)
   const onDoneRef = useRef(onDone)
-  onDoneRef.current = onDone
+  useEffect(() => { onDoneRef.current = onDone })
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // body 스크롤 잠금
@@ -42,7 +42,7 @@ export default function Splash({ onDone }) {
         alignItems: 'center',
         justifyContent: 'center',
         opacity: splashOut ? 0 : 1,
-        transition: reduced ? 'none' : 'opacity 500ms cubic-bezier(0.22,1,0.36,1)',
+        transition: reduced ? 'none' : `opacity 500ms ${motion.ease}`,
         pointerEvents: splashOut ? 'none' : 'all',
       }}
     >
@@ -57,7 +57,7 @@ export default function Splash({ onDone }) {
           transform: reduced ? 'none' : logoVisible ? 'translateY(0px)' : 'translateY(12px)',
           transition: reduced
             ? 'none'
-            : 'opacity 600ms cubic-bezier(0.22,1,0.36,1), transform 600ms cubic-bezier(0.22,1,0.36,1)',
+            : `opacity 600ms ${motion.ease}, transform 600ms ${motion.ease}`,
         }}
       />
     </div>

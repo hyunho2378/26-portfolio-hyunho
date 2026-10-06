@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { color, space } from '../../tokens.js'
+import { space, motion } from '../../tokens.js'
 import PosterCard from './PosterCard.jsx'
 
 // ── 아치(부채꼴) 배치 상수 ──
@@ -90,6 +90,14 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
   function onKeyDown(e) {
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1) }
     else if (e.key === 'ArrowRight') { e.preventDefault(); go(1) }
+    else if (e.key === 'Enter' || e.key === ' ') {
+      // 키보드로도 중앙 카드의 상세를 연다(포인터 클릭과 동일 경로)
+      e.preventDefault()
+      const N = totalRef.current
+      const idx = ((activeRef.current % N) + N) % N
+      const el = containerRef.current?.querySelector('[data-card-index="' + idx + '"]')
+      if (el && !displayProjects[idx]?.comingSoon) onSelect(displayProjects[idx], el.getBoundingClientRect())
+    }
   }
 
   function onPointerDown(e) {
@@ -168,7 +176,7 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
     <div
       ref={containerRef}
       role="region"
-      aria-label="프로젝트 캐러셀 — 휠·화살표·드래그로 이동"
+      aria-label="프로젝트 캐러셀. 휠, 화살표, 드래그로 이동할 수 있다."
       tabIndex={0}
       onKeyDown={onKeyDown}
       onPointerDown={onPointerDown}
@@ -181,7 +189,6 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
         height: CONTAINER_H,
         marginBottom: space[6],
         overflow: 'hidden',
-        outline: 'none',
         cursor: dragging ? 'grabbing' : 'grab',
         touchAction: 'pan-y',
         userSelect: 'none',
@@ -229,7 +236,7 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
           // 드래그 중엔 transition 'none' → 손가락에 즉각. 그 외엔 회전·페이드 부드럽게.
           const transition = (reduced || dragging)
             ? 'none'
-            : 'transform 260ms cubic-bezier(0.22,1,0.36,1), opacity 220ms ease'
+            : `transform 260ms ${motion.ease}, opacity 220ms ease`
 
           const lift = (isActive && hovered === i && !reduced && !dragging) ? -10 : 0
 
@@ -261,7 +268,7 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
                   onDragStart={(e) => e.preventDefault()}
                   onMouseEnter={() => setHovered(i)}
                   onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
-                  style={{ cursor: 'pointer', outline: 'none', WebkitTapHighlightColor: 'transparent' }}
+                  style={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
                 >
                   <PosterCard project={p} index={numberMap[p.id] ?? i + 1} active={isActive} dim={dim} />
                 </div>

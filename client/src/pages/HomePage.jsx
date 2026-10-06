@@ -7,7 +7,7 @@ import CarouselTabs from '../components/work/CarouselTabs.jsx'
 import StackCarousel from '../components/work/StackCarousel.jsx'
 import ProjectDetail from '../components/work/ProjectDetail.jsx'
 import SectionLabel from '../components/ui/SectionLabel.jsx'
-import { color, type as typeToken, space, layout } from '../tokens.js'
+import { color, type as typeToken, space, layout, font, tracking, motion } from '../tokens.js'
 import { profile } from '../data/profile.js'
 
 // 타입별 번호 맵(타입 내 1-based) — All 탭에서도 타입별 번호 유지
@@ -27,11 +27,10 @@ function NavButton({ children, onClick }) {
         padding: `${space[3]} ${space[4]}`,
         fontSize: typeToken.label.size,
         fontWeight: typeToken.label.weight,
-        fontFamily: 'Pretendard, sans-serif',
+        fontFamily: font.body,
         letterSpacing: typeToken.label.ls,
         color: color.paper,
         position: 'relative',
-        outline: 'none',
       }}
       onMouseEnter={(e) => {
         const ul = e.currentTarget.querySelector('.nav-ul')
@@ -41,11 +40,6 @@ function NavButton({ children, onClick }) {
         const ul = e.currentTarget.querySelector('.nav-ul')
         if (ul) ul.style.width = '0%'
       }}
-      onFocus={(e) => {
-        e.currentTarget.style.outline = `2px solid ${color.accent}`
-        e.currentTarget.style.outlineOffset = '3px'
-      }}
-      onBlur={(e) => { e.currentTarget.style.outline = 'none' }}
     >
       {children}
       <span
@@ -54,12 +48,12 @@ function NavButton({ children, onClick }) {
         style={{
           display: 'block',
           position: 'absolute',
-          bottom: '4px',
+          bottom: space[1],
           left: space[4],
-          height: '1.5px',
+          height: layout.rule,
           width: '0%',
           backgroundColor: color.accent,
-          transition: 'width 220ms cubic-bezier(0.22,1,0.36,1)',
+          transition: `width 220ms ${motion.ease}`,
           pointerEvents: 'none',
         }}
       />
@@ -114,7 +108,7 @@ export default function HomePage() {
         >
           <button
             aria-label="홈"
-            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0 }}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0, minWidth: layout.touch, minHeight: layout.touch, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
             onClick={focusCarousel}
           >
             <img
@@ -130,9 +124,9 @@ export default function HomePage() {
               style={{
                 marginTop: space[1],
                 fontSize: typeToken.small.size,
-                fontFamily: 'Pretendard, sans-serif',
+                fontFamily: font.body,
                 color: color.paper,
-                letterSpacing: '0.04em',
+                letterSpacing: tracking.md,
               }}
             >
               {profile.name}
@@ -172,19 +166,7 @@ export default function HomePage() {
           }}
         >
           <NavButton onClick={focusCarousel}>WORK</NavButton>
-          <span
-            aria-hidden="true"
-            style={{ color: color.muted, fontFamily: 'Pretendard, sans-serif', fontSize: typeToken.label.size, userSelect: 'none' }}
-          >
-            ·
-          </span>
           <NavButton onClick={() => setAboutOpen(true)}>ABOUT</NavButton>
-          <span
-            aria-hidden="true"
-            style={{ color: color.muted, fontFamily: 'Pretendard, sans-serif', fontSize: typeToken.label.size, userSelect: 'none' }}
-          >
-            ·
-          </span>
           <NavButton onClick={() => setContactOpen(true)}>CONTACT</NavButton>
         </div>
       </main>

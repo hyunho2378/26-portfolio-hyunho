@@ -1,4 +1,4 @@
-import { type, color } from '../../tokens.js'
+import { type, color, font } from '../../tokens.js'
 
 // 아이브로우. accent(프라이머리) 핑크 + 볼드 + 확대. 선 장식 없음.
 export default function SectionLabel({ children }) {
@@ -10,7 +10,7 @@ export default function SectionLabel({ children }) {
         fontWeight: type.label.weight,
         letterSpacing: type.label.ls,
         color: color.accent,
-        fontFamily: 'Pretendard, sans-serif',
+        fontFamily: font.body,
       }}
     >
       {children}

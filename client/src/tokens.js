@@ -18,7 +18,18 @@ export const color = {
 
     // 상태
     focus: 'rgba(226,125,166,0.55)',
+    accentSoft: 'rgba(226,125,166,0.09)', // accent 호버 틴트
+
+    // 레이어 배경(ink 기반 반투명). 컴포넌트에서 rgba를 직접 쓰지 않는다.
+    overlay: {
+        soft: 'rgba(24,24,24,0.80)',
+        base: 'rgba(24,24,24,0.92)',
+        strong: 'rgba(24,24,24,0.97)',
+    },
 }
+
+// ink 위에 덮는 어둠 막. 깊이감처럼 값이 동적으로 변하는 곳에서만 사용.
+export const inkAlpha = (a) => `rgba(24,24,24,${a})`
 
 export const font = {
     display: "'Pretendard', sans-serif",
@@ -37,6 +48,19 @@ export const type = {
     small: { size: 'clamp(13px, 1vw, 14px)', weight: 400, lh: 1.5, ls: '0', family: 'body' },
     label: { size: '14px', weight: 700, lh: 1.3, ls: '0.16em', family: 'body' }, // 아이브로우(accent)
     caption: { size: '12px', weight: 400, lh: 1.4, ls: '0', family: 'body' },
+    micro: { size: '11px', weight: 400, lh: 1.4, ls: '0', family: 'body' },
+}
+
+// 자간 토큰. 컴포넌트에서 letterSpacing 문자열을 직접 쓰지 않는다.
+export const tracking = {
+    tight: '-0.02em', snug: '-0.01em', none: '0',
+    sm: '0.02em', md: '0.04em', lg: '0.06em', xl: '0.12em', label: '0.16em',
+}
+
+// 모션 토큰. 150/250/400/600ms 4단계 + 공통 감속 곡선.
+export const motion = {
+    fast: '150ms', base: '250ms', slow: '400ms', reveal: '600ms',
+    ease: 'cubic-bezier(0.22,1,0.36,1)',
 }
 
 // 4pt 배수 간격
@@ -52,6 +76,11 @@ export const layout = {
     containerSite: '1680px',    // 포트폴리오 기본 컨테이너
     pagePadX: { base: '16px', md: '40px', xl: '64px' },
     radius: { sm: '4px', md: '8px', card: '12px', pill: '999px' }, // card=이미지 카드 전용
+    touch: '44px', // 터치 타깃 최소
+    infoMax: '520px', // 상세 우측 정보 열 최대 폭(읽기 폭)
+    rule: '2px', // 밑줄, 구분선 두께
+    track: '3px', // 숙련도 바 트랙 두께
+    barMax: '200px', // 숙련도 바 최대 길이
 }
 
 export const shadow = {
@@ -75,7 +104,8 @@ export const carousel = {
     cardAspect: '16 / 10',
     cardWidthPortrait: 'min(20vw, 264px)', // 세로형(모바일) 카드 폭
     cardAspectPortrait: '9 / 16',          // 세로형 비율
+    flipPerspective: '1400px', // 상세 카드 플립 원근
     autoRotate: 0.15,  // idle 자동 회전 속도(px/frame). 0이면 비활성
 }
 
-export default { color, font, type, space, layout, shadow, carousel }
+export default { color, font, type, tracking, motion, space, layout, shadow, carousel }

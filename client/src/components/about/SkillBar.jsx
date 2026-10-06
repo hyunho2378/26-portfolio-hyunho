@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
-import { color, type as typeToken, space, layout } from '../../tokens.js'
+import { prefersReducedMotion } from '../../lib/useLayer.js'
+import { color, type as typeToken, space, layout, font, tracking, motion } from '../../tokens.js'
 
-const EASE = 'cubic-bezier(0.22,1,0.36,1)'
+const EASE = motion.ease
 const DURATION = 700
 
 function BarItem({ skill, index, triggered }) {
@@ -14,8 +15,8 @@ function BarItem({ skill, index, triggered }) {
       {/* 아이콘 or 원형 플레이스홀더 */}
       <div
         style={{
-          width: '24px',
-          height: '24px',
+          width: space[6],
+          height: space[6],
           flexShrink: 0,
           borderRadius: '50%',
           overflow: 'hidden',
@@ -35,10 +36,10 @@ function BarItem({ skill, index, triggered }) {
       {/* 라벨 */}
       <span
         style={{
-          width: '80px',
+          width: space[20],
           flexShrink: 0,
           fontSize: typeToken.small.size,
-          fontFamily: 'Pretendard, sans-serif',
+          fontFamily: font.body,
           color: color.muted,
         }}
       >
@@ -48,10 +49,10 @@ function BarItem({ skill, index, triggered }) {
       {/* 트랙 + 바 (max 200px — 화면 끝까지 뻗기 금지) */}
       <div
         style={{
-          width: '200px',
-          maxWidth: '200px',
-          flexShrink: 0,
-          height: '3px',
+          flex: '1 1 0',
+          minWidth: 0,
+          maxWidth: layout.barMax,
+          height: layout.track,
           backgroundColor: color.line,
           borderRadius: layout.radius.pill,
           overflow: 'hidden',
@@ -71,10 +72,10 @@ function BarItem({ skill, index, triggered }) {
       {/* % */}
       <span
         style={{
-          width: '32px',
+          width: space[8],
           textAlign: 'right',
           fontSize: typeToken.small.size,
-          fontFamily: 'Pretendard, sans-serif',
+          fontFamily: font.body,
           color: color.muted,
           flexShrink: 0,
         }}
@@ -94,13 +95,13 @@ function SkillTag({ label, icon }) {
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '6px',
+        gap: space[2],
         padding: `${space[1]} ${space[3]}`,
         border: `1px solid ${color.line}`,
         borderRadius: layout.radius.pill,
-        fontSize: '12px',
-        fontFamily: 'Pretendard, sans-serif',
-        letterSpacing: '0.06em',
+        fontSize: typeToken.caption.size,
+        fontFamily: font.body,
+        letterSpacing: tracking.lg,
         color: color.muted,
       }}
     >
@@ -109,7 +110,7 @@ function SkillTag({ label, icon }) {
           src={icon}
           alt=""
           onError={() => setIconErr(true)}
-          style={{ width: '14px', height: '14px', objectFit: 'contain' }}
+          style={{ width: space[4], height: space[4], objectFit: 'contain' }}
         />
       )}
       {label}
@@ -119,15 +120,11 @@ function SkillTag({ label, icon }) {
 
 export default function SkillBar({ skills, skillTags }) {
   const ref = useRef(null)
-  const [triggered, setTriggered] = useState(false)
+  const [triggered, setTriggered] = useState(prefersReducedMotion)
 
   useEffect(() => {
     const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTriggered(true)
-      return
-    }
+    if (!el || triggered) return undefined
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -139,7 +136,7 @@ export default function SkillBar({ skills, skillTags }) {
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [])
+  }, [triggered])
 
   return (
     <div ref={ref} style={{ display: 'flex', flexDirection: 'column', gap: space[8] }}>

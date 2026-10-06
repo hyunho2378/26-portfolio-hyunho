@@ -1,111 +1,113 @@
 # IA.md
 
-> 정보 구조. 페이지·섹션 목록, 네비게이션 플로우, Work 타입 분류, 상세 진입 분기.
+> 정보 구조. 2026-10 기준 구현을 그대로 기록한다. 구조를 바꾸면 이 문서를 먼저 고친다.
 
 ---
 
-## 1. 페이지 (라우트)
+## 1. 화면 구성
 
-| path | 페이지 | 설명 |
+단일 화면 앱이다. 세로 스크롤 섹션이 없다. 홈 한 장에서 레이어(모달)가 열리고 닫힌다.
+
+| 화면 | 진입 | 구성 |
 |---|---|---|
-| `/` | HomePage | 세로 스크롤. Hero → About → Work → Contact |
-| `/work/:id` | WorkDetailPage | 프로젝트 상세. 타입별 콘텐츠 분기 |
-| `*` | NotFoundPage | 404 |
-
----
-
-## 2. 홈 섹션 순서 (세로 스크롤)
-
-```
-[Header] sticky — HO 로고 / WORK · ABOUT · CONTACT
-  │
-  ▼
-1. Hero      — HO 로고 + 이름 + 정체성 내러티브 + 복수전공 + 프로필 사진
-2. About     — 내러티브 2문장 · 캐릭터 칩 · 성적/장학 · 진로목표 · Tools · 이력 리스트
-3. Work      — 타입 탭(UX/시각/개발) + 카드 그리드(항상 보임)
-4. Contact   — 이메일 · GitHub · Instagram
-[Footer]
-```
-
-특강 섹션(Onboarding, AITimeline, Planning, Method, WhyClaudeCode, Toolkit, Survival, DesignerFuture, Manifesto, Gallery)은 **전부 폐기**.
-
----
-
-## 3. About 내부 구조
-
-화면 위계는 tier(star/normal/faint)로. 핵심만 전면, 나머지 접기.
-
-1. **상단 내러티브** 2문장 (profile.headline + intro)
-2. **캐릭터 칩** 창의적 · 끈기 · 기발 · 열정 · 꼼꼼 (키워드 칩, 문장 아님)
-3. **성적·장학** 전공평점 4.5/4.5 · 전체평점 4.28/4.5 · 2025-1·2 과 수석(2연속)
-4. **진로 목표** 한 줄
-5. **Tools** 숙련도 바 + 태그 (4번 항목)
-6. **이력 리스트** EDUCATION / ROLES / AWARDS / ACTIVITIES / EXPERIENCE
-   - AWARDS·ACTIVITIES·EXPERIENCE는 star 3~4개만 노출 + "더보기/접기"
-   - 자격증: GTQ 포토샵 1급 · ITQ 파워포인트 · 워드프로세서 한글 B
-
----
-
-## 4. Work 타입 분류
-
-탭 3개. 같은 프로젝트라도 대표 타입 하나로 분류한다.
-
-| 타입 탭 | type 값 | 상세 콘텐츠 방식 |
-|---|---|---|
-| 개발(코딩) | `dev` | 라이브 사이트. 상세 안 링크 버튼 또는 임베드 → 새 탭 |
-| UX | `ux` | PDF 포트폴리오. 상세 안 PDF 뷰어. (웹형 포폴이면 dev처럼 링크) |
-| 시각디자인 | `visual` | 목업 이미지(PNG). 상세 안 갤러리/라이트박스 |
-
-### 상세 진입 분기 (확인 필요 — 아래 5절)
+| Splash | 최초 접속 | 로고 페이드. 약 1.9초 뒤 종료(reduced-motion은 0.8초) |
+| Home | `/` | 상단 로고와 타이틀, 타입 탭, 부채꼴 캐러셀, 하단 WORK / ABOUT / CONTACT |
+| Project Detail 레이어 | 캐러셀 카드 클릭 | 카드가 중앙에서 좌측으로 이동, 우측에 정보. 카드 플립(이미지, 정보) |
+| About 레이어 | 하단 ABOUT | 한 화면에 한 섹션, 4장을 넘겨 본다 |
+| Contact 레이어 | 하단 CONTACT | 이메일, GitHub, Instagram |
+| `/work/:id` | 직접 URL | 상세 페이지. 앱 안에서 링크로 이동하지는 않는다(공유용 URL) |
+| `*` | 없는 경로 | 404 |
 
 ```
-카드 클릭 → /work/:id (PageTransition fade)
-  ├─ dev    → 상세에서 "라이브 열기" 버튼/임베드 → 새 탭
-  ├─ ux     → 상세에서 PDF 뷰어 (웹형이면 링크)
-  └─ visual → 상세에서 이미지 갤러리 (외부 진입 없음, 갤러리가 콘텐츠)
+[Splash] → [Home]
+              ├─ 탭(All / UX / Visual / Vibe Coding) → 캐러셀 필터
+              ├─ 카드 클릭 → [Project Detail 레이어] → 닫기 → [Home]
+              ├─ ABOUT → [About 레이어: PROFILE / AWARD / ACTIVITIES / EXPERIENCE]
+              └─ CONTACT → [Contact 레이어]
 ```
 
-"시각 제외 모든 작품은 상세 거친 뒤 외부로 들어감"이라는 결정 반영: dev·ux는 상세 → 외부(라이브/PDF), visual은 상세 자체가 종착(갤러리).
+레이어 공통 동작은 `lib/useLayer.js`가 맡는다. 열림 시 포커스 이동, Tab 순환, Escape 닫기, 닫힌 뒤 트리거로 포커스 복귀, body 스크롤 잠금.
 
 ---
 
-## 5. 프로젝트 병합 (결정 반영)
+## 2. About 레이어 (페이지형)
 
-### 강릉페이 (3카드 → 1프로젝트)
-기존 `gangneung-pay-ios` · `gangneung-pay-and` · `gangneung-pay-folio` 카드 **삭제**. 하나의 `gangneung-pay` 카드로 통합. 상세 안에 3개 진입 링크:
-- iOS 버전 (라이브)
-- Android 버전 (라이브)
-- 프로젝트 웹사이트 / UX 포트폴리오 (라이브)
+한 화면을 꽉 채우고 넘겨 본다. 한 장에는 한 종류의 정보만 둔다.
 
-→ 데이터 모델에 `links: [{label, url}]` 필요(COMPONENTS.md 참조).
-
-### AXIOM (제안 — 동일 패턴)
-`axiom`(라이브 제품) + `axiom-folio`(포트폴리오 웹)도 같은 논리로 하나의 `axiom` 카드 + 상세 안 2링크(라이브 / 포트폴리오)로 병합 제안. **확인 필요.**
-
----
-
-## 6. 현재 라이브 프로젝트 (병합 후, 타입 미확정)
-
-projects.js 마이그레이션은 4단계. 아래는 현재 보유 라이브 자산(타입은 네가 확정):
-
-| id | 제목 | 잠정 타입 | 비고 |
+| 장 | id | 내용 | 데이터 |
 |---|---|---|---|
-| gangneung-pay | 강릉페이 | ux 또는 dev | iOS+Android+포폴 3링크 병합 |
-| numer9 | 디지털 소외 시니어 AI 무간섭 서비스 | ux 또는 dev | 라이브 보유 |
-| axiom | AXIOM | dev | folio 병합 제안 |
-| dah-exhibition | Against the Flow 전시 | dev | |
-| teapot-418 | 418: I'M A TEAPOT 포스터 공모전 | dev | |
-| dah-character | 디인예 캐릭터 공모전 | dev | |
-| lucid-link | LUCID 링크페이지 | dev | |
-| dalat-vibe | Dalat Vibe | dev | |
+| 01 | profile | 사진, ABOUT, INTERESTED IN, CHARACTER, EDUCATION, GPA, TOOLS | `profile.intro/interests/character/education/gpa/skills/skillTags` |
+| 02 | award | 수상 목록만 | `profile.awards` |
+| 03 | activities | LEADERSHIP & ACTIVITIES 목록만 | `profile.activities` |
+| 04 | experience | EXPERIENCE 목록만 | `profile.experience` |
 
-UX(PDF)·시각(PNG) 프로젝트는 네가 자료 주면 4단계에서 추가.
+- 이동: 상단 탭, 하단 이전/다음 버튼, 키보드 좌우 화살표, 모바일 좌우 스와이프.
+- 목록 장은 다단(CSS columns)으로 채운다. 열 수: 768px 이상 2열, EXPERIENCE는 1280px 이상 3열. 768px 미만은 1열이며 장 내부에서 세로 스크롤한다.
+- 1440x900 기준으로 설계했고, 그보다 큰 화면은 레이어 전체를 비율대로 확대한다(최대 2.5배).
+- 전화번호와 생년월일은 데이터에는 있지만 화면에 노출하지 않는다.
 
 ---
 
-## 7. Contact
+## 3. Work 분류
 
-- 이메일 (mailto)
-- GitHub: https://github.com/hyunho2378
-- Instagram (핸들 미정)
-- 전화번호·풀 생년월일은 **공개 안 함**(개인정보 노출 방지).
+캐러셀은 키보드로도 쓴다. 좌우 화살표로 회전, Enter 또는 Space로 중앙 카드의 상세를 연다.
+
+탭은 4개다. 같은 프로젝트는 대표 타입 하나로만 분류한다.
+
+| 탭 | type | 개수(2026-10) | 상세 구성 |
+|---|---|---:|---|
+| All | 전체 | 32 | UX, Vibe Coding, Visual 순으로 번호를 매긴다 |
+| UX | `ux` | 9 | CONTRIBUTION, OUTCOME, AWARD, LINKS |
+| Visual | `visual` | 15 | OBJECTIVE, STRATEGY, OUTCOME, TOOLS, AWARD, LINKS |
+| Vibe Coding | `dev` | 8 | CONTRIBUTION, OUTCOME, AWARD, LINKS |
+
+번호는 `HomePage`의 `numberMap`이 타입 순서(ux, dev, visual)로 부여한다.
+
+---
+
+## 4. 프로젝트 데이터 (`data/projects.js`)
+
+### 필드
+
+| 필드 | 용도 | 비고 |
+|---|---|---|
+| `id` | 식별자 | 유일해야 한다. 수상 연결 키 |
+| `titleEn`, `titleKo`, `title` | 카드 제목, 상세 제목, 접근성 이름 | 상세 h1은 `titleEn` |
+| `label` | 카드 상단 분류 문구 | |
+| `oneLiner` | 한 줄 소개 | |
+| `summary` | 소개 문단 | 선택 |
+| `type`, `category` | 탭 분류, 시각 작품 하위 분류 | |
+| `period` | 기간 | |
+| `accent` | 프로젝트 고유색 | 카드 배경은 원색. 글자와 테두리는 `readableAccent`로 보정 |
+| `thumbnail`, `gallery`, `pdfUrl`, `links` | 미디어와 링크 | |
+| `role`, `contribution` | 역할, 기여도 | |
+| `objective`, `strategy`, `outcome`, `tools` | 시각 작품 본문 | `outcome`에는 수상을 쓰지 않는다 |
+| `flipInfoMode`, `flipImageMode`, `flipLandscape` | 카드 플립 방식 | |
+
+### 수상 연결 (단일 출처)
+
+수상은 `data/profile.js`의 `awards`에만 쓴다. 프로젝트와 관련된 수상은 항목에 `project: '<프로젝트 id>'`를 붙인다. 상세 레이어가 이 값을 읽어 AWARD 블록을 자동으로 만든다.
+
+- About의 AWARD와 상세의 AWARD가 어긋날 수 없다.
+- 연결하려면 수상명이나 기존 `outcome`에 프로젝트 근거가 있어야 한다. 근거가 없으면 연결하지 않는다.
+- `outcome`에는 수상 이외의 성과만 쓴다(정량 지표, 협업, 후속 계획).
+
+### 상세 공통 순서
+
+타입 라벨 → 제목 → 한 줄 소개 → summary → 썸네일(UX, Vibe Coding) → 타입별 블록 → ROLE, PERIOD → TOOLS 칩(시각 외).
+
+---
+
+## 5. 표기 규칙
+
+- 가운데점(`·`)은 쓰지 않는다. 역할이나 병렬 명사는 `/`(기획/디자인), 문장 속 병렬은 "와/과", 구분용 점은 제거하거나 쉼표로 쓴다. 코드 주석은 제외한다.
+- 수상명은 Figma 프로파일의 전체 문구를 따르고 따옴표는 뺀다.
+- 한다체와 명사형 소제목, 과장 금지.
+
+---
+
+## 6. Contact
+
+- 이메일: mailto
+- GitHub: `github.com/hyunho2378`
+- Instagram: `@hyunhoj479`
