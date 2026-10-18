@@ -44,7 +44,7 @@ export const projects = [
     accent: '#04C45C',
     thumbnail: '/thumbs/numer9.webp',
     contribution: 'PM, UX Research 25%, Service Design 90%, Frontend 100%',
-    outcome: '네이버 플레이스 유입 3월 75회에서 5월 511회(누적 849회), 네이버 예약 신규 15건, AI 맞춤 서비스 신규 사용자 101명, 신규 남성 손님 0명에서 14명, 3개월 연속 재방문 고객 발생, 후평동 상인회 협업 공식 매뉴얼 제작 및 디지털 리터러시 강연 진행 예정',
+    outcome: '네이버 플레이스 유입 3월 75회에서 5월 511회(7월 누적 849회), 네이버 예약 신규 15건(9월 29일 기준), AI 맞춤 서비스 총 118회 이용, 신규 남성 손님 0명에서 17명, 3개월 연속 재방문 고객 발생, 6개월 유지보수 계약 체결(5월 9일), 후평동 상인회 협업 공식 매뉴얼 제작 및 디지털 리터러시 강연 진행 예정',
     textColor: '#141416',
     links: [
       { label: 'AI 진단 서비스', url: 'https://numer9-ai-service.vercel.app/' },
@@ -110,7 +110,7 @@ export const projects = [
     period: '2026',
     accent: '#FFD821',
     thumbnail: '/thumbs/urbanedge.webp',
-    contribution: '', // TODO 본인 담당 확인
+    contribution: 'UX 리서치, 웹 개발',
     outcome: '',
     links: [
       { label: '웹사이트', url: 'https://urbanedge-web.vercel.app' },
@@ -202,7 +202,7 @@ export const projects = [
     thumbnail: '/thumbs/donghae-sai.webp',
     contribution: '서비스 기획, 브랜딩, AI, 웹',
     outcome: '',
-    links: [],
+    links: [{ label: '서비스', url: 'https://donghae-sai.vercel.app/' }],
     pdfUrl: '/pdf/donghae-sai.pdf',
     gallery: [],
   },

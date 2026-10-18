@@ -76,7 +76,7 @@ export const profile = {
   ],
 
   awards: [
-    { year: '2026', text: '한림 G-Lab@정선 지역문제 해결 정책 제안 여우어라지: 정선아리랑 가사 속 정선을 실제 여행길로 옮기는 NFC 여행 안내 서비스 디자인 금상(정선군수상)', tier: 'star', project: 'jeongseon-arirang' },
+    { year: '2026', text: '한림 G-Lab@정선 지역문제 해결 정책 제안 어여우라지: 정선아리랑 가사 속 정선을 실제 여행길로 옮기는 NFC 여행 안내 서비스 디자인 금상(정선군수상)', tier: 'star', project: 'jeongseon-arirang' },
     { year: '2026', text: '세계경주포럼 UIA 임팩톤 @경주 경주 황리단길 무인 셀프 사진관 UrbanEdge CX 디자인 최우수상', tier: 'star', project: 'urbanedge' },
     { year: '2026', text: '한림대학교 로컬 창업 아이디어톤 온새마루: 강원 대학생이 찾아가 가르치고, 막힌 지점을 기록하는 디지털 교육 서비스 최우수상(총장상)', tier: 'star', project: 'onsaemaru' },
     { year: '2026', text: '영수증 플랫폼 기반 Town MICE 아이디어톤 겨울 영수증으로 여름 화천을 여는 재방문 마일리지 서비스 우수상', tier: 'normal' },
