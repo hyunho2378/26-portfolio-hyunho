@@ -76,9 +76,9 @@ export const profile = {
   ],
 
   awards: [
-    { year: '2026', text: '한림 G-Lab@정선 지역문제 해결 정책 제안 여우어라지: 정선아리랑 가사 속 정선을 실제 여행길로 옮기는 NFC 여행 안내 서비스 디자인 금상(정선군수상)', tier: 'star' },
-    { year: '2026', text: '세계경주포럼 UIA 임팩톤 @경주 경주 황리단길 무인 셀프 사진관 UrbanEdge CX 디자인 최우수상', tier: 'star' },
-    { year: '2026', text: '한림대학교 로컬 창업 아이디어톤 온새마루: 강원 대학생이 찾아가 가르치고, 막힌 지점을 기록하는 디지털 교육 서비스 최우수상(총장상)', tier: 'star' },
+    { year: '2026', text: '한림 G-Lab@정선 지역문제 해결 정책 제안 여우어라지: 정선아리랑 가사 속 정선을 실제 여행길로 옮기는 NFC 여행 안내 서비스 디자인 금상(정선군수상)', tier: 'star', project: 'jeongseon-arirang' },
+    { year: '2026', text: '세계경주포럼 UIA 임팩톤 @경주 경주 황리단길 무인 셀프 사진관 UrbanEdge CX 디자인 최우수상', tier: 'star', project: 'urbanedge' },
+    { year: '2026', text: '한림대학교 로컬 창업 아이디어톤 온새마루: 강원 대학생이 찾아가 가르치고, 막힌 지점을 기록하는 디지털 교육 서비스 최우수상(총장상)', tier: 'star', project: 'onsaemaru' },
     { year: '2026', text: '영수증 플랫폼 기반 Town MICE 아이디어톤 겨울 영수증으로 여름 화천을 여는 재방문 마일리지 서비스 우수상', tier: 'normal' },
     { year: '2026', text: '한림 로컬 창업 빌드업 축제에 녹아드는 여정을 담은 캐릭터 IP 비즈니스: 마에로와 삐삐로 대상', tier: 'star', project: 'maero' },
     { year: '2026', text: '앵커 참여 대학(원)생 우수사례 경진대회 창업 교과목 수강을 통한 지역 산업체 디지털 소외 문제 해결 최우수상(한국연구재단 이사장상)', tier: 'star', project: 'numer9' },
@@ -104,6 +104,9 @@ export const profile = {
   ],
 
   experience: [
+    { year: '2026', text: '모두의 창업 2기 로컬트랙 축제에 녹아드는 여정을 담은 캐릭터 IP 비즈니스: 마에로와 삐삐로 1라운드 선정', tier: 'normal' },
+    { year: '2026', text: '모두의 창업 2기 일반/기술트랙 온새마루: 강원 대학생이 찾아가 가르치고, 막힌 지점을 기록하는 디지털 교육 서비스 1라운드 선정', tier: 'normal' },
+    { year: '2026', text: 'KCEF(한국지역사회교육재단) 심포지엄 AI로 사람과 세대를 잇다 세션 발표 및 패널 토의', tier: 'normal' },
     { year: '2026', text: '자유전공학부 전공 나침반: 디지털인문예술전공 소개 및 멘토링 특강 진행', tier: 'normal' },
     { year: '2026', text: '사회적 가치 페스타 UIA x 한양대 IMPACT NEXT FORUM 세션 기획/운영', tier: 'normal' },
     { year: '2026', text: '사회적 가치 페스타 UIA x 한양대 IMPACT NEXT FORUM 포스터 제작', tier: 'normal' },
