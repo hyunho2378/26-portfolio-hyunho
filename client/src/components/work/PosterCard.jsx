@@ -16,11 +16,12 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
     <div
       style={{
         position: 'relative',
+        containerType: 'inline-size', // 안쪽 글자를 카드 폭(cqw) 기준으로
         aspectRatio: '2 / 3',
         backgroundColor: bg,
         borderRadius: layout.radius.card,
         overflow: 'hidden',
-        padding: 'clamp(14px, 1.4vw, 22px)',
+        padding: 'clamp(14px, 7cqw, 40px)',
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
@@ -32,7 +33,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         <div style={{ textAlign: 'right', maxWidth: '100%' }}>
           <p style={{
             margin: 0,
-            fontSize: 'clamp(9px, 0.7vw, 11px)',
+            fontSize: 'clamp(9px, 3.7cqw, 20px)',
             fontFamily: font.body,
             fontWeight: 700,
             letterSpacing: tracking.xl,
@@ -49,7 +50,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           {period && (
             <p style={{
               margin: '2px 0 0',
-              fontSize: 'clamp(9px, 0.7vw, 11px)',
+              fontSize: 'clamp(9px, 3.7cqw, 20px)',
               fontFamily: font.body,
               letterSpacing: tracking.lg,
               lineHeight: 1.3,
@@ -69,12 +70,12 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         flexDirection: 'column',
         justifyContent: 'center',
         minHeight: 0,
-        paddingTop: 'clamp(8px, 1vw, 14px)',
-        paddingBottom: 'clamp(8px, 1vw, 14px)',
+        paddingTop: 'clamp(8px, 5cqw, 26px)',
+        paddingBottom: 'clamp(8px, 5cqw, 26px)',
       }}>
         <h3 style={{
           margin: 0,
-          fontSize: 'clamp(20px, 1.7vw, 32px)',
+          fontSize: 'clamp(20px, 8.4cqw, 52px)',
           fontWeight: 600,
           fontFamily: font.body,
           lineHeight: 1.1,
@@ -90,8 +91,8 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         </h3>
         {subTitle && (
           <p style={{
-            margin: 'clamp(6px, 0.6vw, 10px) 0 0',
-            fontSize: 'clamp(11px, 0.9vw, 14px)',
+            margin: 'clamp(6px, 3.4cqw, 18px) 0 0',
+            fontSize: 'clamp(11px, 5.2cqw, 24px)',
             fontFamily: font.body,
             lineHeight: 1.35,
             color: fg,
@@ -109,7 +110,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
       {/* 하단: 번호만 (좌) */}
       <div style={{ flexShrink: 0 }}>
         <span style={{
-          fontSize: 'clamp(28px, 3vw, 52px)',
+          fontSize: 'clamp(28px, 17cqw, 96px)',
           fontWeight: 700,
           fontFamily: font.body,
           lineHeight: 1,

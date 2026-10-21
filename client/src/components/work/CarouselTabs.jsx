@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { color, type as typeToken, space, layout, font, motion } from '../../tokens.js'
+import { color, type as typeToken, space, layout, font, motion, ios } from '../../tokens.js'
 
 const TABS = [
   { label: 'All', value: 'all' },
@@ -30,12 +30,13 @@ export default function CarouselTabs({ activeTab, onChange }) {
     <div
       role="tablist"
       aria-label="프로젝트 타입 필터"
+      className="carousel-tabs"
       style={{
         display: 'flex',
         alignItems: 'center',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         gap: space[1],
-        padding: `0 clamp(${layout.pagePadX.base}, 5vw, ${layout.pagePadX.xl})`,
+        padding: `0 calc(clamp(${ios.margin}, 5vw, ${layout.pagePadX.xl}) - ${space[3]})`,
       }}
     >
       {TABS.map(({ label, value }, idx) => {
@@ -54,11 +55,12 @@ export default function CarouselTabs({ activeTab, onChange }) {
               border: 'none',
               cursor: 'pointer',
               minHeight: layout.touch,
+              minWidth: layout.touch,
               padding: `0 ${space[3]}`,
-              fontSize: typeToken.label.size,
-              fontWeight: typeToken.label.weight,
+              fontSize: typeToken.labelLg.size,
+              fontWeight: typeToken.labelLg.weight,
               fontFamily: font.body,
-              letterSpacing: typeToken.label.ls,
+              letterSpacing: typeToken.labelLg.ls,
               color: isActive ? color.accent : color.muted,
               transition: `color ${motion.base} ease`,
               whiteSpace: 'nowrap',

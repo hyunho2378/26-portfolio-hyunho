@@ -238,10 +238,6 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   const srcCx = rect.left + rect.width / 2
   const srcCy = rect.top + rect.height / 2
 
-  const centerScale = Math.min((vw * 0.62) / rect.width, (vh * 0.82) / rect.height)
-  const centerTx = vw / 2 - srcCx
-  const centerTy = vh / 2 - srcCy
-
   let dockedScale, dockedCx, dockedCy
   if (isMobile) {
     dockedScale = Math.min((vw * 0.66) / rect.width, (vh * 0.44) / rect.height)
@@ -262,13 +258,11 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
 
   const transforms = {
     from: 'translate(0px, 0px) scale(1)',
-    center: `translate(${centerTx}px, ${centerTy}px) scale(${centerScale})`,
     docked: `translate(${dockedTx}px, ${dockedTy}px) scale(${dockedScale})`,
   }
   const posterTransition = {
     from: 'none',
-    center: 'transform 520ms cubic-bezier(0.16,1,0.3,1)',
-    docked: 'transform 560ms cubic-bezier(0.16,1,0.3,1)',
+    docked: 'transform 600ms cubic-bezier(0.16,1,0.3,1)',
   }
 
   const [phase, setPhase] = useState(reduced ? 'docked' : 'from')
@@ -278,17 +272,13 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
   const [flipped, setFlipped] = useState(reduced && anyFlip)
   const [lightboxOpen, setLightboxOpen] = useState(false)  // 작품 이미지 탭 → 풀스크린 확대
 
-  // phase machine — center에서 잠깐 머문 뒤 docked로 (전체 약 0.5s 단축)
+  // phase machine — 카드 자리에서 정착 위치로 한 번에 이동(멈춤 없음). 이동 후반에 정보, 이어서 플립.
   useEffect(() => {
     if (reduced) return undefined
-    const raf = requestAnimationFrame(() => { setPhase('center'); setDimIn(true) })
-    // center 등장(520ms) + 짧은 텀(120ms) 후 docked로
-    const tDock = setTimeout(() => { setPhase('docked') }, 520 + 120)
-    // docked 이동이 거의 끝날 때 우측 정보 등장
-    const tInfo = setTimeout(() => { setInfoVisible(true) }, 520 + 120 + 320)
-    // docked 정착 후 카드 플립(이미지 or 정보)
-    const tFlip = anyFlip ? setTimeout(() => setFlipped(true), 520 + 120 + 420) : null
-    return () => { cancelAnimationFrame(raf); clearTimeout(tDock); clearTimeout(tInfo); if (tFlip) clearTimeout(tFlip) }
+    const raf = requestAnimationFrame(() => { setPhase('docked'); setDimIn(true) })
+    const tInfo = setTimeout(() => { setInfoVisible(true) }, 360)
+    const tFlip = anyFlip ? setTimeout(() => setFlipped(true), 460) : null
+    return () => { cancelAnimationFrame(raf); clearTimeout(tInfo); if (tFlip) clearTimeout(tFlip) }
   }, [reduced, anyFlip])
 
   // body scroll lock
@@ -311,13 +301,12 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
     // 포커스가 캐러셀 카드로 복귀하며 생기는 focus 링 방지
     if (document.activeElement && document.activeElement.blur) document.activeElement.blur()
     if (reduced) { onCloseRef.current(); return }
-    // 진입의 역방향(대칭): 정보 fade out → 포스터 docked→center(머묾)→from → 딤 fade
+    // 진입의 역방향: 정보 fade out과 플립 해제 → 포스터가 카드 자리로 한 번에 복귀 → 딤 fade
     setClosing(true)
     setFlipped(false)
     setInfoVisible(false)
-    setTimeout(() => setPhase('center'), 260)            // 정보 사라진 뒤 중앙으로 복귀(560ms 이동)
-    setTimeout(() => { setPhase('from'); setDimIn(false) }, 260 + 560 + 120) // center 잠깐 머문 뒤 원위치
-    setTimeout(() => onCloseRef.current(), 260 + 560 + 120 + 520)
+    setTimeout(() => { setPhase('from'); setDimIn(false) }, 140)
+    setTimeout(() => onCloseRef.current(), 140 + 560)
   }
 
   const typeLabel = project.label || (
@@ -343,7 +332,7 @@ export default function ProjectDetail({ project, rect, number, onClose }) {
         style={{
           position: 'absolute', inset: 0, zIndex: 0,
           backgroundColor: color.ink,
-          opacity: dimIn ? 0.96 : 0,
+          opacity: dimIn ? (isMobile ? 0.99 : 0.96) : 0,
           transition: reduced ? 'none' : 'opacity 520ms ease',
         }}
       />

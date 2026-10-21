@@ -6,8 +6,8 @@ import ContactLayer from '../components/about/ContactLayer.jsx'
 import CarouselTabs from '../components/work/CarouselTabs.jsx'
 import StackCarousel from '../components/work/StackCarousel.jsx'
 import ProjectDetail from '../components/work/ProjectDetail.jsx'
-import SectionLabel from '../components/ui/SectionLabel.jsx'
-import { color, type as typeToken, space, layout, font, tracking, motion } from '../tokens.js'
+import TabBar from '../components/layout/TabBar.jsx'
+import { color, type as typeToken, space, layout, font, tracking, ios } from '../tokens.js'
 import { profile } from '../data/profile.js'
 
 // 타입별 번호 맵(타입 내 1-based) — All 탭에서도 타입별 번호 유지
@@ -16,55 +16,11 @@ const ordered = TYPE_ORDER.flatMap((t) => projects.filter((p) => p.type === t))
 const numberMap = {}
 ordered.forEach((p, i) => { numberMap[p.id] = i + 1 })
 
-function NavButton({ children, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        padding: `${space[3]} ${space[4]}`,
-        fontSize: typeToken.label.size,
-        fontWeight: typeToken.label.weight,
-        fontFamily: font.body,
-        letterSpacing: typeToken.label.ls,
-        color: color.paper,
-        position: 'relative',
-      }}
-      onMouseEnter={(e) => {
-        const ul = e.currentTarget.querySelector('.nav-ul')
-        if (ul) ul.style.width = `calc(100% - ${space[8]})`
-      }}
-      onMouseLeave={(e) => {
-        const ul = e.currentTarget.querySelector('.nav-ul')
-        if (ul) ul.style.width = '0%'
-      }}
-    >
-      {children}
-      <span
-        className="nav-ul"
-        aria-hidden="true"
-        style={{
-          display: 'block',
-          position: 'absolute',
-          bottom: space[1],
-          left: space[4],
-          height: layout.rule,
-          width: '0%',
-          backgroundColor: color.accent,
-          transition: `width 220ms ${motion.ease}`,
-          pointerEvents: 'none',
-        }}
-      />
-    </button>
-  )
-}
+const padX = `clamp(${ios.margin}, 5vw, ${layout.pagePadX.xl})`
 
 export default function HomePage() {
   const [introDone, setIntroDone] = useState(false)
-  const [aboutOpen, setAboutOpen] = useState(false)
-  const [contactOpen, setContactOpen] = useState(false)
+  const [layer, setLayer] = useState(null) // null | 'about' | 'contact'
   const [activeTab, setActiveTab] = useState('all')
   const [detail, setDetail] = useState(null) // { project, rect, number }
   const carouselRef = useRef(null)
@@ -78,20 +34,26 @@ export default function HomePage() {
     carouselRef.current?.focus()
   }
 
+  // 하단 내비: 한 번에 하나의 레이어만 연다. Work는 레이어를 닫고 캐러셀로.
+  function onNav(id) {
+    if (id === 'work') { setLayer(null); focusCarousel(); return }
+    setLayer((cur) => (cur === id ? null : id))
+  }
+
   return (
     <>
       {!introDone && <Splash onDone={() => setIntroDone(true)} />}
 
       <main
+        className="home-main"
         style={{
-          minHeight: '100vh',
           backgroundColor: color.ink,
           display: 'flex',
           flexDirection: 'column',
-          paddingTop: space[6],
-          paddingBottom: space[6],
+          paddingTop: `max(${space[6]}, env(safe-area-inset-top))`,
+          paddingBottom: ios.tabBar.space,
           boxSizing: 'border-box',
-          overflowX: 'hidden',
+          overflow: 'hidden',
         }}
       >
         {/* ── 상단 바: 로고(좌) + 타이틀(우) ── */}
@@ -102,24 +64,36 @@ export default function HomePage() {
             justifyContent: 'space-between',
             flexShrink: 0,
             paddingTop: space[2],
-            paddingLeft: `clamp(${layout.pagePadX.base}, 5vw, ${layout.pagePadX.xl})`,
-            paddingRight: `clamp(${layout.pagePadX.base}, 5vw, ${layout.pagePadX.xl})`,
+            paddingLeft: padX,
+            paddingRight: padX,
           }}
         >
           <button
             aria-label="홈"
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, flexShrink: 0, minWidth: layout.touch, minHeight: layout.touch, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
-            onClick={focusCarousel}
+            onClick={() => onNav('work')}
           >
             <img
               src="/logo-ho.svg"
               alt="HO"
-              style={{ width: 'clamp(40px, 4vw, 60px)', height: 'auto', display: 'block' }}
+              style={{ width: 'clamp(40px, 3.2vw, 72px)', height: 'auto', display: 'block' }}
             />
           </button>
 
           <div style={{ textAlign: 'right' }}>
-            <SectionLabel>2026 PORTFOLIO / VOL.01</SectionLabel>
+            <span
+              style={{
+                display: 'inline-flex',
+                textTransform: 'uppercase',
+                fontSize: typeToken.labelLg.size,
+                fontWeight: typeToken.labelLg.weight,
+                letterSpacing: typeToken.labelLg.ls,
+                color: color.accent,
+                fontFamily: font.body,
+              }}
+            >
+              2026 PORTFOLIO / VOL.01
+            </span>
             <p
               style={{
                 marginTop: space[1],
@@ -134,45 +108,33 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ── 중앙: 탭 + 하단 스택 캐러셀 ── */}
+        {/* ── 중앙: 탭 + 캐러셀(남은 높이를 모두 채움) ── */}
         <div
           style={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
             minHeight: 0,
-            paddingTop: space[6],
+            paddingTop: 'clamp(16px, 2.2vh, 40px)',
           }}
         >
           <CarouselTabs activeTab={activeTab} onChange={setActiveTab} />
-          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+          <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
             <StackCarousel
               ref={carouselRef}
               projects={filtered}
               numberMap={numberMap}
+              hiddenId={detail?.project.id ?? null}
               onSelect={(p, rect) => setDetail({ project: p, rect, number: numberMap[p.id] })}
             />
           </div>
         </div>
-
-        {/* ── 하단 트리거 바 ── */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: space[2],
-            flexShrink: 0,
-          }}
-        >
-          <NavButton onClick={focusCarousel}>WORK</NavButton>
-          <NavButton onClick={() => setAboutOpen(true)}>ABOUT</NavButton>
-          <NavButton onClick={() => setContactOpen(true)}>CONTACT</NavButton>
-        </div>
       </main>
 
-      <AboutLayer open={aboutOpen} onClose={() => setAboutOpen(false)} />
-      <ContactLayer open={contactOpen} onClose={() => setContactOpen(false)} />
+      <TabBar active={layer || 'work'} onSelect={onNav} hidden={!!detail} />
+
+      <AboutLayer open={layer === 'about'} onClose={() => setLayer(null)} />
+      <ContactLayer open={layer === 'contact'} onClose={() => setLayer(null)} />
 
       {detail && (
         <ProjectDetail

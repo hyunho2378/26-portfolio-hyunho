@@ -1,5 +1,5 @@
 import { X, Mail, ExternalLink, AtSign } from 'lucide-react'
-import { color, type as typeToken, space, layout, font, motion } from '../../tokens.js'
+import { color, type as typeToken, space, layout, font, ios } from '../../tokens.js'
 import { profile } from '../../data/profile.js'
 import { useLayer } from '../../lib/useLayer.js'
 import IconButton from '../ui/IconButton.jsx'
@@ -42,7 +42,7 @@ export default function ContactLayer({ open, onClose }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: `0 clamp(${layout.pagePadX.base}, 5vw, ${layout.pagePadX.xl})`,
+        padding: `0 clamp(${ios.margin}, 5vw, ${layout.pagePadX.xl}) ${ios.tabBar.space}`,
         opacity: shown ? 1 : 0,
         transition: reduced ? 'none' : `opacity ${DUR}ms ease`,
       }}
@@ -55,8 +55,8 @@ export default function ContactLayer({ open, onClose }) {
           border: `1px solid ${color.line}`,
           borderRadius: layout.radius.card,
           padding: `${space[8]} ${space[8]} ${space[10]}`,
-          transform: reduced ? 'none' : shown ? 'translateY(0px)' : `translateY(${space[4]})`,
-          transition: reduced ? 'none' : `transform ${DUR}ms ${motion.ease}`,
+          transform: reduced ? 'none' : shown ? 'translateY(0px)' : `translateY(${space[6]})`,
+          transition: reduced ? 'none' : `transform ${DUR}ms ${ios.sheetEase}`,
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: space[8] }}>

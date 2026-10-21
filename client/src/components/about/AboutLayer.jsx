@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { color, type as typeToken, space, layout, font, motion, tracking } from '../../tokens.js'
+import { color, type as typeToken, space, layout, font, motion, tracking, ios } from '../../tokens.js'
 import { profile } from '../../data/profile.js'
 import { useLayer } from '../../lib/useLayer.js'
 import IconButton from '../ui/IconButton.jsx'
@@ -88,7 +88,8 @@ export default function AboutLayer({ open, onClose }) {
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
         opacity: shown ? 1 : 0,
-        transition: reduced ? 'none' : `opacity ${DUR}ms ease`,
+        transform: reduced || shown ? 'none' : `translateY(${space[6]})`,
+        transition: reduced ? 'none' : `opacity ${DUR}ms ease, transform ${DUR}ms ${ios.sheetEase}`,
       }}
     >
       {/* 상단: 섹션 탭 + 닫기 */}
@@ -175,7 +176,7 @@ export default function AboutLayer({ open, onClose }) {
           justifyContent: 'center',
           gap: space[6],
           flexShrink: 0,
-          padding: `${space[3]} ${padX} calc(${space[3]} + env(safe-area-inset-bottom))`,
+          padding: `${space[3]} ${padX} calc(${space[2]} + ${ios.tabBar.space} / ${zoom})`,
         }}
       >
         <IconButton label="이전 섹션" onClick={() => setPage((p) => Math.max(p - 1, 0))} disabled={page === 0}>

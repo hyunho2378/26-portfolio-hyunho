@@ -1,0 +1,5 @@
+<svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="61.89" height="61.89" rx="15.54" fill="url(#bg_vercel)" stroke="#26252A"/>
+<g transform="translate(13.5 13.5) scale(1.5)" fill="#FFFFFF"><path d="m12 1.608 12 20.784H0Z"/></g>
+<defs><linearGradient id="bg_vercel" x1="31.45" y1="0.5" x2="31.45" y2="62.39" gradientUnits="userSpaceOnUse"><stop stop-color="#1E1E1E"/><stop offset="1" stop-color="#141414"/></linearGradient></defs>
+</svg>

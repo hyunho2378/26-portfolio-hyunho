@@ -1,19 +1,28 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
-import { space, motion } from '../../tokens.js'
+import { forwardRef, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from 'react'
+import { motion, ios } from '../../tokens.js'
 import PosterCard from './PosterCard.jsx'
 
 // ── 아치(부채꼴) 배치 상수 ──
 // 각 카드를 화면 아래 먼 회전중심(ARC_RADIUS)을 기준으로 ARC_ANGLE도씩 돌려 원호에 올린다.
 // → 가운데 카드는 위/정면, 양옆으로 갈수록 아래로 휘며 기울어짐 = 아치.
 const ARC_ANGLE = 9         // 카드 1칸당 각도(deg) — 클수록 더 휨
-const ARC_RADIUS = 1300     // 회전 반지름(px) — 클수록 완만한 아치
+const ARC_RATIO = 4.1       // 회전 반지름 = 카드 폭 x ARC_RATIO (카드가 커지면 아치도 같이 커짐)
 const MAX_HALF_WINDOW = 6   // 중앙 기준 좌우 표시 장수 상한(실제값은 N에 따라 동적 제한)
 const WHEEL_THRESHOLD = 10  // 휠 델타 임계
 const DRAG_ANGLE_PER_PX = 0.06  // 1px 드래그당 원판 회전 각도(deg). 0.05~0.08 조정.
-const CARD_W = 'clamp(180px, 16vw, 320px)'
-const CONTAINER_H = 'clamp(380px, 56vh, 560px)'
+const CARD_RATIO = 3 / 2    // 포스터 카드 세로/가로(PosterCard aspectRatio 2/3)
+const CARD_FILL = 0.86      // 카드 높이가 캐러셀 높이에서 차지하는 비율
 
-const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = {}, onSelect }, ref) {
+// 캐러셀 영역 크기에서 카드 폭을 정한다. 큰 모니터는 높이를 따라 커지고, 모바일은 화면 폭의 60%.
+function cardSize(w, h, reserve = 0) {
+  const byH = (h * CARD_FILL) / CARD_RATIO
+  const byW = w < 640 ? w * 0.68 : w * 0.25
+  const cw = Math.round(Math.max(150, Math.min(byH, byW, 760)))
+  const ch = cw * CARD_RATIO
+  return { cw, ch, radius: Math.round(cw * ARC_RATIO), bottom: reserve + Math.round(Math.max(12, (h - ch) * 0.35)) }
+}
+
+const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = {}, onSelect, hiddenId = null }, ref) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   const [displayProjects, setDisplayProjects] = useState(projects)
@@ -24,6 +33,21 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
   const [groupKey, setGroupKey] = useState(0)
 
   const containerRef = useRef(null)
+  const [box, setBox] = useState(() => ({ w: window.innerWidth, h: Math.round(window.innerHeight * 0.6) }))
+  useLayoutEffect(() => {
+    const el = containerRef.current
+    if (!el) return undefined
+    // 아래쪽 padding(탭바 높이)은 카드가 놓일 자리에서 빼고, 카드 아래 기준점에 더한다.
+    const measure = () => {
+      const r = parseFloat(getComputedStyle(el).paddingBottom) || 0
+      setBox({ w: el.clientWidth, h: el.clientHeight - r, r })
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  const size = cardSize(box.w, box.h, box.r || 0)
   const trackRef = useRef(null)
   const drag = useRef({ active: false, startX: 0, dx: 0, moved: false })
   const downCard = useRef(null)
@@ -186,8 +210,11 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
       style={{
         position: 'relative',
         width: '100%',
-        height: CONTAINER_H,
-        marginBottom: space[6],
+        flex: 1,
+        minHeight: 0,
+        // 하단 탭바 뒤까지 카드가 지나가게(iOS 26 플로팅 탭바). 탭바 높이만큼 아래로 늘린다.
+        paddingBottom: ios.tabBar.space,
+        marginBottom: `calc(-1 * ${ios.tabBar.space})`,
         overflow: 'hidden',
         cursor: dragging ? 'grabbing' : 'grab',
         touchAction: 'pan-y',
@@ -246,10 +273,10 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
               style={{
                 position: 'absolute',
                 left: '50%',
-                bottom: '8%',
-                width: CARD_W,
-                // 회전 원점을 카드 아래 ARC_RADIUS 지점으로 → 부채꼴 아치
-                transformOrigin: `center ${ARC_RADIUS}px`,
+                bottom: size.bottom,
+                width: size.cw,
+                // 회전 원점을 카드 아래 반지름 지점으로 → 부채꼴 아치
+                transformOrigin: `center ${size.radius}px`,
                 transform: `translateX(-50%) rotate(${angle}deg)`,
                 zIndex: z,
                 opacity: op,
@@ -268,7 +295,8 @@ const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = 
                   onDragStart={(e) => e.preventDefault()}
                   onMouseEnter={() => setHovered(i)}
                   onMouseLeave={() => setHovered((h) => (h === i ? null : h))}
-                  style={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent' }}
+                  // 상세로 날아간 카드는 원래 자리에서 숨겨 한 장으로 보이게
+                  style={{ cursor: 'pointer', WebkitTapHighlightColor: 'transparent', visibility: hiddenId === p.id ? 'hidden' : 'visible' }}
                 >
                   <PosterCard project={p} index={numberMap[p.id] ?? i + 1} active={isActive} dim={dim} />
                 </div>

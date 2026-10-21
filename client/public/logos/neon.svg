@@ -1,0 +1,5 @@
+<svg width="63" height="63" viewBox="0 0 63 63" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="0.5" y="0.5" width="61.89" height="61.89" rx="15.54" fill="url(#bg_neon)" stroke="#26252A"/>
+<g transform="translate(13.5 13.5) scale(1.5)" fill="#00E599"><path d="M24 0V24l-9.365-8.045V24H0V0ZM2.942 21.087h8.751V9.563l9.365 8.204V2.919L2.942 2.914Z"/></g>
+<defs><linearGradient id="bg_neon" x1="31.45" y1="0.5" x2="31.45" y2="62.39" gradientUnits="userSpaceOnUse"><stop stop-color="#1E1E1E"/><stop offset="1" stop-color="#141414"/></linearGradient></defs>
+</svg>

@@ -47,6 +47,7 @@ export const type = {
     body: { size: 'clamp(15px, 1.2vw, 16px)', weight: 400, lh: 1.65, ls: '0', family: 'body' },
     small: { size: 'clamp(13px, 1vw, 14px)', weight: 400, lh: 1.5, ls: '0', family: 'body' },
     label: { size: '14px', weight: 700, lh: 1.3, ls: '0.16em', family: 'body' }, // 아이브로우(accent)
+    labelLg: { size: 'clamp(14px, 0.75vw, 20px)', weight: 700, lh: 1.3, ls: '0.16em', family: 'body' }, // 홈 상단(큰 화면에서 커짐)
     caption: { size: '12px', weight: 400, lh: 1.4, ls: '0', family: 'body' },
     micro: { size: '11px', weight: 400, lh: 1.4, ls: '0', family: 'body' },
 }
@@ -108,4 +109,40 @@ export const carousel = {
     autoRotate: 0.15,  // idle 자동 회전 속도(px/frame). 0이면 비활성
 }
 
-export default { color, font, type, tracking, motion, space, layout, shadow, carousel }
+// iOS 26 키트(Figma qjJ2EH6y1qJOEJAf95bZCv) 값 이식. 페이지 Tab Bars, Materials.
+// Tab Bar - iPhone (Minimized=False, Tabs=3, Type=Default): 높이 95, 패딩 위16 좌우68 아래25, 탭 54 높이, 반경 1000.
+// _Tab Bar Button - iPhone: 아이콘 18/28, 라벨 10/12 weight 590, 아이콘과 라벨 간격 1, 탭 패딩 6 8 7 8.
+// Liquid Glass - Regular Mode=Dark: Fill rgba(26,26,26,.7), 그림자 0 8 48 rgba(0,0,0,.45), 림 0.5px #A6A6A6.
+// Glass Button Dark(Active=False): rgba(118,118,128,.12) + 0.5px 림.
+export const ios = {
+    margin: '20px',          // 화면 좌우 기본 여백(HIG layout margin)
+    tabBar: {
+        padTop: '16px',
+        padBottom: '25px',
+        padX: '68px',
+        height: '54px',      // 캡슐 높이(=탭 높이)
+        tabMinW: '72px',
+        radius: '1000px',
+        tabRadius: '100px',
+        tabPad: '6px 8px 7px',
+        iconBox: '28px',
+        icon: 18,
+        label: '10px',
+        labelLh: '12px',
+        labelWeight: 590,
+        gap: '1px',
+        // 화면 하단에서 탭바가 차지하는 높이(캡슐 54 + 위 16 + 아래 max(25, 세이프에어리어))
+        space: 'calc(54px + 16px + max(25px, env(safe-area-inset-bottom)))',
+    },
+    glass: {
+        fill: 'rgba(26,26,26,0.70)',
+        blur: 'blur(24px) saturate(180%)',
+        shadow: '0 8px 48px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(166,166,166,0.55), inset 1.25px 0 0 -0.75px rgba(166,166,166,0.6), inset -1.25px 0 0 -0.75px rgba(166,166,166,0.6)',
+        selected: 'rgba(118,118,128,0.24)',
+        selectedRim: '0 0 0 0.5px rgba(230,230,230,0.18)',
+        label: '#F5F5F5',
+    },
+    sheetEase: 'cubic-bezier(0.32,0.72,0,1)', // iOS 시트 감속 곡선
+}
+
+export default { color, font, type, tracking, motion, space, layout, shadow, carousel, ios }

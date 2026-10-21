@@ -135,3 +135,15 @@ emmeliestrand.se의 "호버 없이 항상 보이는 그리드" 흡수. 3D 캐러
 - **페이지 전환**: opacity만 사용한다. 위치 이동과 radius 애니메이션은 쓰지 않는다.
 - **가운데점 금지**: 화면에 보이는 문자열에 `·`를 쓰지 않는다(IA.md 5절).
 - **shadow**: 캐러셀 카드의 깊이감용 `shadow.poster`, `shadow.posterActive` 토큰만 허용한다.
+
+
+## 11. 2026-10 iOS 26 키트 반영 (하단 내비, Liquid Glass)
+
+- 기준 파일: Figma qjJ2EH6y1qJOEJAf95bZCv, 페이지 Tab Bars, Materials. 값은 tokens.js의 ios 객체에만 둔다.
+- 하단 내비: Tab Bar - iPhone(Tabs=3, Type=Default). 캡슐 높이 54, 위 16, 아래 max(25, safe-area), 반경 1000. 탭 패딩 6 8 7 8, 아이콘 18(박스 28), 라벨 10/12 weight 590. 모든 화면 폭에서 같은 하단 캡슐을 쓴다.
+- 재질: Liquid Glass - Regular Mode=Dark. 채움 rgba(26,26,26,.7) + backdrop blur 24 saturate 180, 그림자 0 8 48 rgba(0,0,0,.45), 0.5px 림. 선택 탭은 Glass Button Dark(rgba(118,118,128,.24) + 0.5px 림), 글자색 accent.
+- box-shadow 허용 예외: 탭바 재질(ios.glass.shadow)과 선택 탭 림.
+- 홈은 100dvh에 고정하고 캐러셀이 남은 높이를 채운다. 카드 폭은 캐러셀 높이의 86%(2:3 비율)와 화면 폭(모바일 68%, 그 외 25%) 중 작은 값, 최대 760. 아치 반지름은 카드 폭 x 4.1. 캐러셀은 탭바 뒤까지 이어진다.
+- 포스터 카드 안 글자는 카드 폭 기준(cqw 단위)으로 커진다.
+- 상세 전환: 카드 자리에서 정착 위치로 600ms 한 번에 이동(중간 멈춤 없음), 360ms 정보, 460ms 플립. 닫기는 140ms 후 560ms 복귀. 상세가 열린 동안 원래 카드와 탭바는 숨긴다.
+- About, Contact: 아래에서 24px 올라오는 시트 전환(ios.sheetEase). 하단은 탭바 높이만큼 비운다.

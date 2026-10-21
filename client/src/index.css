@@ -38,6 +38,21 @@
   }
 }
 
+/* 홈: 화면 높이에 고정(모바일 주소창 변화 대응 dvh) */
+.home-main {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* 좁은 폰(360 이하): 필터 탭 한 줄 유지 */
+@media (max-width: 360px) {
+  .carousel-tabs button {
+    padding: 0 6px !important;
+    min-width: 44px;
+    letter-spacing: 0.08em !important;
+  }
+}
+
 /* 레이어 페이지 전환: opacity만 사용(위치 이동 없음) */
 @keyframes page-in {
   from { opacity: 0; }
