@@ -16,10 +16,10 @@ const CARD_FILL = 0.86      // 카드 높이가 캐러셀 높이에서 차지하
 // 캐러셀 영역 크기에서 카드 폭을 정한다. 큰 모니터는 높이를 따라 커지고, 모바일은 화면 폭의 60%.
 function cardSize(w, h, reserve = 0) {
   const byH = (h * CARD_FILL) / CARD_RATIO
-  const byW = w < 640 ? w * 0.68 : w * 0.25
+  const byW = w < 640 ? w * 0.6 : w * 0.25
   const cw = Math.round(Math.max(150, Math.min(byH, byW, 760)))
   const ch = cw * CARD_RATIO
-  return { cw, ch, radius: Math.round(cw * ARC_RATIO), bottom: reserve + Math.round(Math.max(12, (h - ch) * 0.35)) }
+  return { cw, ch, radius: Math.round(cw * ARC_RATIO), bottom: reserve + Math.round(Math.max(12, (h - ch) * (w < 640 ? 0.45 : 0.35))) }
 }
 
 const StackCarousel = forwardRef(function StackCarousel({ projects, numberMap = {}, onSelect, hiddenId = null }, ref) {

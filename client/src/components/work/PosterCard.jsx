@@ -21,7 +21,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         backgroundColor: bg,
         borderRadius: layout.radius.card,
         overflow: 'hidden',
-        padding: 'clamp(14px, 7cqw, 40px)',
+        padding: 'clamp(14px, 6%, 40px)', // % = 카드 폭 기준(자기 자신에는 cqw가 안 먹음)
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
@@ -33,7 +33,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         <div style={{ textAlign: 'right', maxWidth: '100%' }}>
           <p style={{
             margin: 0,
-            fontSize: 'clamp(9px, 3.7cqw, 20px)',
+            fontSize: 'clamp(11px, 3.7cqw, 20px)',
             fontFamily: font.body,
             fontWeight: 700,
             letterSpacing: tracking.xl,
@@ -50,7 +50,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
           {period && (
             <p style={{
               margin: '2px 0 0',
-              fontSize: 'clamp(9px, 3.7cqw, 20px)',
+              fontSize: 'clamp(11px, 3.7cqw, 20px)',
               fontFamily: font.body,
               letterSpacing: tracking.lg,
               lineHeight: 1.3,
@@ -75,7 +75,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
       }}>
         <h3 style={{
           margin: 0,
-          fontSize: 'clamp(20px, 8.4cqw, 52px)',
+          fontSize: 'clamp(24px, 8.4cqw, 52px)',
           fontWeight: 600,
           fontFamily: font.body,
           lineHeight: 1.1,
@@ -92,7 +92,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
         {subTitle && (
           <p style={{
             margin: 'clamp(6px, 3.4cqw, 18px) 0 0',
-            fontSize: 'clamp(11px, 5.2cqw, 24px)',
+            fontSize: 'clamp(13px, 5.2cqw, 24px)',
             fontFamily: font.body,
             lineHeight: 1.35,
             color: fg,
@@ -110,7 +110,7 @@ export default function PosterCard({ project, index, active = false, dim = 0 }) 
       {/* 하단: 번호만 (좌) */}
       <div style={{ flexShrink: 0 }}>
         <span style={{
-          fontSize: 'clamp(28px, 17cqw, 96px)',
+          fontSize: 'clamp(36px, 17cqw, 96px)',
           fontWeight: 700,
           fontFamily: font.body,
           lineHeight: 1,
