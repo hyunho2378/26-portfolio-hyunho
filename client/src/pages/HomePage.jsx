@@ -92,7 +92,7 @@ export default function HomePage() {
                 fontFamily: font.body,
               }}
             >
-              2026 PORTFOLIO / VOL.01
+              2026 PORTFOLIO / VOL.03
             </span>
             <p
               style={{
