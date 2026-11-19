@@ -276,6 +276,8 @@ export default function WorkDetailPage() {
                     letterSpacing: typeToken.h1.ls,
                     fontFamily: font.body,
                     color: color.paper,
+                    wordBreak: 'keep-all',
+                    textWrap: 'balance',
                   }}>
                     {title}
                   </h1>

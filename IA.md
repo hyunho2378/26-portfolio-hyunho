@@ -54,10 +54,10 @@
 
 탭은 4개다. 같은 프로젝트는 대표 타입 하나로만 분류한다.
 
-| 탭 | type | 개수(2026-10) | 상세 구성 |
+| 탭 | type | 개수(2026-11) | 상세 구성 |
 |---|---|---:|---|
-| All | 전체 | 36 | UX, Vibe Coding, Visual 순으로 번호를 매긴다 |
-| UX | `ux` | 13 | CONTRIBUTION, OUTCOME, AWARD, LINKS |
+| All | 전체 | 39 | UX, Vibe Coding, Visual 순으로 번호를 매긴다 |
+| UX | `ux` | 16 | CONTRIBUTION, OUTCOME, AWARD, LINKS |
 | Visual | `visual` | 15 | OBJECTIVE, STRATEGY, OUTCOME, TOOLS, AWARD, LINKS |
 | Vibe Coding | `dev` | 8 | CONTRIBUTION, OUTCOME, AWARD, LINKS |
 
